@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#1B2A4A;
@@ -44,7 +44,7 @@
     -webkit-font-smoothing:antialiased;
   }
   h1,h2,h3,h4{
-    font-family:'Fraunces', serif;
+    font-family:'Roboto', sans-serif;
     color:var(--ink);
     margin:0 0 .4em;
     letter-spacing:-0.01em;
@@ -57,12 +57,15 @@
     font-size:1.02rem;
     letter-spacing:.1em;
     text-transform:uppercase;
-    color:var(--clay);
+    color:var(--paper);
+    background:var(--clay);
     display:inline-flex;
     align-items:center;
     gap:8px;
     margin-bottom:16px;
     font-weight:500;
+    padding:10px 22px;
+    border-radius:999px;
   }
   .mark{position:relative; white-space:nowrap;}
   .mark svg{position:absolute; left:0; bottom:-.14em; width:100%; height:.3em; overflow:visible;}
@@ -163,8 +166,8 @@
     background:radial-gradient(circle, rgba(217,142,61,0.22) 0%, rgba(217,142,61,0) 68%);
     filter:blur(2px);}
   .hero .wrap{position:relative; z-index:1; display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:center;}
-  .hero .eyebrow{color:#f0b876;}
-  .hero h1{font-size:clamp(2.1rem, 4vw, 3.1rem); line-height:1.12; font-weight:600; color:var(--paper);}
+  .hero .eyebrow{color:var(--paper); background:var(--clay);}
+  .hero h1{font-family:'Roboto', sans-serif; font-size:clamp(2.1rem, 4vw, 3.1rem); line-height:1.12; font-weight:600; color:var(--paper);}
   .hero h1 .mark svg path{stroke:#f0b876;}
   .hero p.lede{font-size:1.12rem; max-width:46ch; color:rgba(246,241,231,0.82); margin-bottom:30px;}
   .hero p.lede strong{color:var(--paper);}
@@ -462,6 +465,47 @@
   form.modal-form button[type=submit]{align-self:flex-start; margin-top:6px; cursor:pointer;}
   .modal-error{display:none; color:#b3261e; font-size:.85rem; margin-top:-4px;}
   .modal-error.show{display:block;}
+  form.modal-form input[type=password]{
+    padding:14px 16px; border:1px solid var(--line); border-radius:3px; background:var(--white);
+    font-family:'Work Sans',sans-serif; font-size:.95rem; color:var(--charcoal); width:100%;
+  }
+  .collab-tabs{display:flex; gap:8px; margin-bottom:22px; border-bottom:1px solid var(--line);}
+  .collab-tab{
+    font-family:'Work Sans',sans-serif; font-size:.92rem; font-weight:500; color:#8a8378;
+    background:none; border:none; padding:10px 4px; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .collab-tab.active{color:var(--ink); border-bottom-color:var(--clay);}
+  .link-btn{background:none; border:none; color:var(--clay); font-family:'Work Sans',sans-serif; font-size:.92rem; font-weight:500; cursor:pointer; padding:0; text-decoration:underline;}
+  .forum-layout{margin-top:32px;}
+  .forum-panel{background:var(--white); border:1px solid var(--line); border-radius:8px; padding:28px;}
+  .forum-new-thread{display:flex; gap:10px; margin-bottom:6px;}
+  .forum-new-thread input{
+    flex:1; padding:13px 16px; border:1px solid var(--line); border-radius:3px; background:var(--paper);
+    font-family:'Work Sans',sans-serif; font-size:.95rem; color:var(--charcoal);
+  }
+  .forum-empty{color:#8a8378; font-size:.92rem; padding:18px 0;}
+  .thread-list{margin-top:18px; display:flex; flex-direction:column; gap:2px;}
+  .thread-item{
+    display:flex; justify-content:space-between; align-items:center; gap:14px;
+    padding:16px 4px; border-top:1px solid var(--line); background:none; border-left:none; border-right:none; border-bottom:none;
+    text-align:left; cursor:pointer; font-family:'Work Sans',sans-serif; width:100%;
+  }
+  .thread-item:hover{background:var(--paper);}
+  .thread-item .t-title{font-weight:500; color:var(--ink); font-size:.98rem;}
+  .thread-item .t-meta{font-size:.8rem; color:#8a8378; margin-top:3px;}
+  .thread-item .t-arrow{color:var(--clay); flex-shrink:0;}
+  #forumThreadPanel h3{margin-top:14px; font-size:1.3rem;}
+  .thread-messages{display:flex; flex-direction:column; gap:14px; margin:20px 0; max-height:420px; overflow-y:auto;}
+  .thread-msg{background:var(--paper); border-radius:8px; padding:14px 16px;}
+  .thread-msg .m-author{font-size:.8rem; font-weight:600; color:var(--clay); margin-bottom:4px;}
+  .thread-msg .m-text{font-size:.94rem; color:var(--charcoal); white-space:pre-wrap; line-height:1.5;}
+  .thread-msg .m-time{font-size:.72rem; color:#a39c8f; margin-top:6px;}
+  .forum-reply-form{display:flex; flex-direction:column; gap:10px;}
+  .forum-reply-form textarea{
+    padding:13px 16px; border:1px solid var(--line); border-radius:3px; background:var(--white);
+    font-family:'Work Sans',sans-serif; font-size:.95rem; color:var(--charcoal); resize:vertical; min-height:90px; width:100%;
+  }
+  .forum-reply-form button{align-self:flex-start;}
   .formations-checklist{border-top:1px solid var(--line); padding-top:16px; margin-top:2px;}
   .formations-checklist .checklist-label{
     font-family:'JetBrains Mono',monospace; font-size:.72rem; text-transform:uppercase;
@@ -600,6 +644,7 @@
       <a href="#livres">Livres</a>
       <a href="#apropos">À propos</a>
       <a href="#faq">FAQ</a>
+      <a href="#" id="navCollabLink">Espace Collaborateur</a>
       <a href="#contact" class="btn btn-primary navcta">Contact</a>
     </div>
     <div class="nav-tools">
@@ -1205,7 +1250,7 @@
           <button type="button" class="btn btn-clay" id="btnTelechargerWord">Télécharger en Word</button>
           <button type="button" class="btn btn-pro-cv" id="btnEnvoyerCVPro">Confier à un pro (payant)</button>
         </div>
-        <p class="cv-pro-note">En cliquant sur « Confier à un pro », vos informations sont transformées en document Word et envoyées par e-mail pour la réalisation d'un CV professionnel payant. Le paiement se fera via l'offre CV (bientôt disponible).</p>
+        <p class="cv-pro-note">En cliquant sur « Confier à un pro », vos informations sont transformées en document Word et envoyées par e-mail pour la réalisation d'un CV professionnel payant. Le paiement se fera via l'offre CV.</p>
       </div>
 
       <div class="cv-preview-wrap">
@@ -1498,6 +1543,68 @@
     <button type="button" class="btn btn-primary" id="btnCvTypeContinuer">Continuer vers le devis</button>
   </div>
 </div>
+
+<!-- ============ MODALE ESPACE COLLABORATEUR (connexion / inscription) ============ -->
+<div class="modal-overlay" id="collabModal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="collabModalTitle">
+    <button type="button" class="modal-close" id="collabModalClose" aria-label="Fermer">&times;</button>
+    <h3 id="collabModalTitle">Espace Collaborateur</h3>
+    <p class="modal-sub" id="collabModalSub">Connectez-vous pour accéder au forum des membres.</p>
+
+    <div class="collab-tabs">
+      <button type="button" class="collab-tab active" id="tabLogin">Se connecter</button>
+      <button type="button" class="collab-tab" id="tabRegister">Créer un compte</button>
+    </div>
+
+    <form class="modal-form" id="collabForm" novalidate>
+      <input type="text" name="collabName" id="collabName" placeholder="Nom et prénom" autocomplete="name" maxlength="120" hidden>
+      <span class="modal-error" id="errCollabName">Merci d'indiquer votre nom.</span>
+
+      <input type="email" name="collabEmail" id="collabEmail" placeholder="Adresse e-mail" required autocomplete="email" inputmode="email" maxlength="200">
+      <span class="modal-error" id="errCollabEmail">Merci d'indiquer une adresse e-mail valide.</span>
+
+      <input type="password" name="collabPassword" id="collabPassword" placeholder="Mot de passe (6 caractères min.)" required autocomplete="current-password" maxlength="200">
+      <span class="modal-error" id="errCollabPassword">Le mot de passe doit contenir au moins 6 caractères.</span>
+
+      <button type="submit" class="btn btn-primary" id="collabSubmitBtn">Se connecter</button>
+      <p class="modal-error" id="collabSendError"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ============ ESPACE COLLABORATEUR — FORUM (membres connectés) ============ -->
+<section class="alt collab-space" id="collabSpace" hidden>
+  <div class="wrap">
+    <span class="eyebrow">Espace Collaborateur</span>
+    <h2>Forum des membres</h2>
+    <p class="section-lede">Connecté en tant que <strong id="collabUserLabel"></strong>. <button type="button" class="link-btn" id="collabLogoutBtn">Se déconnecter</button></p>
+
+    <div class="forum-layout">
+      <div class="forum-panel" id="forumListPanel">
+        <form class="forum-new-thread" id="newThreadForm" novalidate>
+          <input type="text" id="newThreadTitle" placeholder="Titre d'une nouvelle discussion..." maxlength="140" required>
+          <button type="submit" class="btn btn-primary">Créer</button>
+        </form>
+        <span class="modal-error" id="errNewThread">Merci d'indiquer un titre.</span>
+
+        <div class="thread-list" id="threadList">
+          <p class="forum-empty" id="threadListEmpty">Aucune discussion pour le moment. Soyez le premier à en lancer une !</p>
+        </div>
+      </div>
+
+      <div class="forum-panel" id="forumThreadPanel" hidden>
+        <button type="button" class="link-btn" id="backToThreads">&larr; Retour aux discussions</button>
+        <h3 id="threadViewTitle"></h3>
+        <div class="thread-messages" id="threadMessages"></div>
+        <form class="forum-reply-form" id="replyForm" novalidate>
+          <textarea id="replyText" placeholder="Écrire une réponse..." maxlength="4000" required></textarea>
+          <button type="submit" class="btn btn-primary">Répondre</button>
+        </form>
+        <span class="modal-error" id="errReply">Merci d'écrire un message.</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="wrap">
@@ -1963,6 +2070,78 @@
     if (e.key === 'Escape' && cvTypeModal && cvTypeModal.classList.contains('open')) fermerCvTypeModal();
   });
 
+  // ---- Espace Collaborateur : ouverture/fermeture modale + onglets ----
+  const navCollabLink = document.getElementById('navCollabLink');
+  const collabModal = document.getElementById('collabModal');
+  const collabModalClose = document.getElementById('collabModalClose');
+  const collabForm = document.getElementById('collabForm');
+  const tabLogin = document.getElementById('tabLogin');
+  const tabRegister = document.getElementById('tabRegister');
+  const collabNameField = document.getElementById('collabName');
+  const collabModalSub = document.getElementById('collabModalSub');
+  const collabSubmitBtn = document.getElementById('collabSubmitBtn');
+  const collabSendError = document.getElementById('collabSendError');
+
+  window.collabMode = 'login';
+
+  function resetCollabErrors() {
+    collabForm.querySelectorAll('.modal-error').forEach(el => el.classList.remove('show'));
+  }
+
+  function setCollabTab(mode) {
+    window.collabMode = mode;
+    resetCollabErrors();
+    if (mode === 'login') {
+      tabLogin.classList.add('active'); tabRegister.classList.remove('active');
+      collabNameField.hidden = true; collabNameField.required = false;
+      collabModalSub.textContent = 'Connectez-vous pour accéder au forum des membres.';
+      collabSubmitBtn.textContent = 'Se connecter';
+    } else {
+      tabRegister.classList.add('active'); tabLogin.classList.remove('active');
+      collabNameField.hidden = false; collabNameField.required = true;
+      collabModalSub.textContent = 'Créez votre compte pour rejoindre le forum des membres.';
+      collabSubmitBtn.textContent = 'Créer mon compte';
+    }
+  }
+  if (tabLogin) tabLogin.addEventListener('click', () => setCollabTab('login'));
+  if (tabRegister) tabRegister.addEventListener('click', () => setCollabTab('register'));
+
+  function ouvrirCollabModal() {
+    if (!collabModal) return;
+    collabForm.reset();
+    setCollabTab('login');
+    collabModal.classList.add('open');
+    collabModal.setAttribute('aria-hidden', 'false');
+  }
+
+  function fermerCollabModal() {
+    if (!collabModal) return;
+    collabModal.classList.remove('open');
+    collabModal.setAttribute('aria-hidden', 'true');
+  }
+  window.ouvrirCollabModal = ouvrirCollabModal;
+  window.fermerCollabModal = fermerCollabModal;
+
+  if (navCollabLink) {
+    navCollabLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.collabUser) {
+        document.getElementById('collabSpace').scrollIntoView({behavior:'smooth'});
+      } else {
+        ouvrirCollabModal();
+      }
+    });
+  }
+  if (collabModalClose) collabModalClose.addEventListener('click', fermerCollabModal);
+  if (collabModal) {
+    collabModal.addEventListener('click', (e) => {
+      if (e.target === collabModal) fermerCollabModal();
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && collabModal && collabModal.classList.contains('open')) fermerCollabModal();
+  });
+
   function finaliserEnvoiCVPro(typeCv) {
     majApercuCV();
     const val = (id) => document.getElementById(id).value.trim();
@@ -2109,6 +2288,243 @@
     });
   });
 
+</script>
+
+<!-- ============ FIREBASE : AUTHENTIFICATION + FORUM DES MEMBRES ============ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+  import {
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    signOut, onAuthStateChanged, updateProfile
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+  import {
+    getFirestore, collection, addDoc, query, orderBy, onSnapshot,
+    serverTimestamp, doc
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDhdBcF37w7ZZBdTWVVVNaZE-MhZMtAdsU",
+    authDomain: "mon-site-skkoulibaly.firebaseapp.com",
+    projectId: "mon-site-skkoulibaly",
+    storageBucket: "mon-site-skkoulibaly.firebasestorage.app",
+    messagingSenderId: "367698551446",
+    appId: "1:367698551446:web:15534cc2af8beda4ba58b7",
+    measurementId: "G-QYLJJP5XKY"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ---- Éléments DOM ----
+  const collabForm = document.getElementById('collabForm');
+  const collabName = document.getElementById('collabName');
+  const collabEmail = document.getElementById('collabEmail');
+  const collabPassword = document.getElementById('collabPassword');
+  const errCollabName = document.getElementById('errCollabName');
+  const errCollabEmail = document.getElementById('errCollabEmail');
+  const errCollabPassword = document.getElementById('errCollabPassword');
+  const collabSendError = document.getElementById('collabSendError');
+  const collabSubmitBtn = document.getElementById('collabSubmitBtn');
+  const navCollabLink = document.getElementById('navCollabLink');
+
+  const collabSpace = document.getElementById('collabSpace');
+  const collabUserLabel = document.getElementById('collabUserLabel');
+  const collabLogoutBtn = document.getElementById('collabLogoutBtn');
+
+  const forumListPanel = document.getElementById('forumListPanel');
+  const forumThreadPanel = document.getElementById('forumThreadPanel');
+  const threadList = document.getElementById('threadList');
+  const threadListEmpty = document.getElementById('threadListEmpty');
+  const newThreadForm = document.getElementById('newThreadForm');
+  const newThreadTitle = document.getElementById('newThreadTitle');
+  const errNewThread = document.getElementById('errNewThread');
+  const backToThreads = document.getElementById('backToThreads');
+  const threadViewTitle = document.getElementById('threadViewTitle');
+  const threadMessages = document.getElementById('threadMessages');
+  const replyForm = document.getElementById('replyForm');
+  const replyText = document.getElementById('replyText');
+  const errReply = document.getElementById('errReply');
+
+  let unsubThreads = null;
+  let unsubMessages = null;
+  let currentThreadId = null;
+
+  function displayNameFor(user) {
+    return user.displayName || user.email;
+  }
+
+  // ---- Inscription / Connexion ----
+  if (collabForm) {
+    collabForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      collabSendError.classList.remove('show');
+      errCollabName.classList.remove('show');
+      errCollabEmail.classList.remove('show');
+      errCollabPassword.classList.remove('show');
+
+      const mode = window.collabMode || 'login';
+      const emailVal = collabEmail.value.trim();
+      const passVal = collabPassword.value;
+      const nameVal = collabName.value.trim();
+
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+      const passOk = passVal.length >= 6;
+      const nameOk = mode === 'login' || nameVal.length > 0;
+
+      errCollabEmail.classList.toggle('show', !emailOk);
+      errCollabPassword.classList.toggle('show', !passOk);
+      errCollabName.classList.toggle('show', !nameOk);
+      if (!emailOk || !passOk || !nameOk) return;
+
+      collabSubmitBtn.disabled = true;
+      try {
+        if (mode === 'register') {
+          const cred = await createUserWithEmailAndPassword(auth, emailVal, passVal);
+          await updateProfile(cred.user, { displayName: nameVal });
+        } else {
+          await signInWithEmailAndPassword(auth, emailVal, passVal);
+        }
+        window.fermerCollabModal();
+      } catch (err) {
+        collabSendError.textContent = messageErreurFirebase(err.code);
+        collabSendError.classList.add('show');
+      } finally {
+        collabSubmitBtn.disabled = false;
+      }
+    });
+  }
+
+  function messageErreurFirebase(code) {
+    switch (code) {
+      case 'auth/email-already-in-use': return "Un compte existe déjà avec cet e-mail. Essayez de vous connecter.";
+      case 'auth/invalid-email': return "Adresse e-mail invalide.";
+      case 'auth/weak-password': return "Mot de passe trop faible (6 caractères minimum).";
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential': return "E-mail ou mot de passe incorrect.";
+      case 'auth/too-many-requests': return "Trop de tentatives. Réessayez dans quelques instants.";
+      default: return "Une erreur est survenue. Merci de réessayer.";
+    }
+  }
+
+  if (collabLogoutBtn) collabLogoutBtn.addEventListener('click', () => signOut(auth));
+
+  // ---- État de connexion ----
+  onAuthStateChanged(auth, (user) => {
+    window.collabUser = user;
+    if (user) {
+      collabSpace.hidden = false;
+      collabUserLabel.textContent = displayNameFor(user);
+      if (navCollabLink) navCollabLink.textContent = 'Mon espace';
+      demarrerEcouteFils();
+    } else {
+      collabSpace.hidden = true;
+      if (navCollabLink) navCollabLink.textContent = 'Espace Collaborateur';
+      if (unsubThreads) { unsubThreads(); unsubThreads = null; }
+      if (unsubMessages) { unsubMessages(); unsubMessages = null; }
+      afficherListeFils();
+    }
+  });
+
+  // ---- Liste des discussions (temps réel) ----
+  function demarrerEcouteFils() {
+    if (unsubThreads) unsubThreads();
+    const q = query(collection(db, 'threads'), orderBy('createdAt', 'desc'));
+    unsubThreads = onSnapshot(q, (snap) => {
+      threadList.innerHTML = '';
+      if (snap.empty) {
+        threadListEmpty.style.display = 'block';
+        return;
+      }
+      threadListEmpty.style.display = 'none';
+      snap.forEach((docSnap) => {
+        const t = docSnap.data();
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'thread-item';
+        const date = t.createdAt ? t.createdAt.toDate().toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric'}) : '';
+        btn.innerHTML = `<span><span class="t-title"></span><br><span class="t-meta"></span></span><span class="t-arrow">&rarr;</span>`;
+        btn.querySelector('.t-title').textContent = t.title || '(sans titre)';
+        btn.querySelector('.t-meta').textContent = 'Par ' + (t.authorName || t.authorEmail || 'membre') + (date ? ' · ' + date : '');
+        btn.addEventListener('click', () => ouvrirFil(docSnap.id, t.title));
+        threadList.appendChild(btn);
+      });
+    });
+  }
+
+  if (newThreadForm) {
+    newThreadForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = newThreadTitle.value.trim();
+      errNewThread.classList.toggle('show', title.length === 0);
+      if (!title || !window.collabUser) return;
+      await addDoc(collection(db, 'threads'), {
+        title,
+        authorUid: window.collabUser.uid,
+        authorEmail: window.collabUser.email,
+        authorName: displayNameFor(window.collabUser),
+        createdAt: serverTimestamp()
+      });
+      newThreadForm.reset();
+      errNewThread.classList.remove('show');
+    });
+  }
+
+  // ---- Vue d'un fil de discussion ----
+  function afficherListeFils() {
+    forumListPanel.hidden = false;
+    forumThreadPanel.hidden = true;
+    currentThreadId = null;
+    if (unsubMessages) { unsubMessages(); unsubMessages = null; }
+  }
+
+  function ouvrirFil(threadId, title) {
+    currentThreadId = threadId;
+    threadViewTitle.textContent = title || '(sans titre)';
+    forumListPanel.hidden = true;
+    forumThreadPanel.hidden = false;
+    threadMessages.innerHTML = '';
+
+    if (unsubMessages) unsubMessages();
+    const msgsRef = collection(db, 'threads', threadId, 'messages');
+    const q = query(msgsRef, orderBy('createdAt', 'asc'));
+    unsubMessages = onSnapshot(q, (snap) => {
+      threadMessages.innerHTML = '';
+      snap.forEach((docSnap) => {
+        const m = docSnap.data();
+        const el = document.createElement('div');
+        el.className = 'thread-msg';
+        const time = m.createdAt ? m.createdAt.toDate().toLocaleString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
+        el.innerHTML = `<div class="m-author"></div><div class="m-text"></div><div class="m-time"></div>`;
+        el.querySelector('.m-author').textContent = m.authorName || m.authorEmail || 'membre';
+        el.querySelector('.m-text').textContent = m.text || '';
+        el.querySelector('.m-time').textContent = time;
+        threadMessages.appendChild(el);
+      });
+      threadMessages.scrollTop = threadMessages.scrollHeight;
+    });
+  }
+
+  if (backToThreads) backToThreads.addEventListener('click', afficherListeFils);
+
+  if (replyForm) {
+    replyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = replyText.value.trim();
+      errReply.classList.toggle('show', text.length === 0);
+      if (!text || !currentThreadId || !window.collabUser) return;
+      await addDoc(collection(db, 'threads', currentThreadId, 'messages'), {
+        text,
+        authorUid: window.collabUser.uid,
+        authorEmail: window.collabUser.email,
+        authorName: displayNameFor(window.collabUser),
+        createdAt: serverTimestamp()
+      });
+      replyText.value = '';
+      errReply.classList.remove('show');
+    });
+  }
 </script>
 
 </body>
