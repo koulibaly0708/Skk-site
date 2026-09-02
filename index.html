@@ -496,10 +496,128 @@
   .thread-item .t-arrow{color:var(--clay); flex-shrink:0;}
   #forumThreadPanel h3{margin-top:14px; font-size:1.3rem;}
   .thread-messages{display:flex; flex-direction:column; gap:14px; margin:20px 0; max-height:420px; overflow-y:auto;}
-  .thread-msg{background:var(--paper); border-radius:8px; padding:14px 16px;}
+  .thread-msg{display:flex; gap:12px; align-items:flex-start; background:var(--paper); border-radius:8px; padding:14px 16px;}
+  .thread-msg .msg-body{flex:1; min-width:0;}
+  .thread-msg .msg-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
   .thread-msg .m-author{font-size:.8rem; font-weight:600; color:var(--clay); margin-bottom:4px;}
-  .thread-msg .m-text{font-size:.94rem; color:var(--charcoal); white-space:pre-wrap; line-height:1.5;}
+  .thread-msg .m-text{font-size:.94rem; color:var(--charcoal); white-space:pre-wrap; line-height:1.5; word-break:break-word;}
   .thread-msg .m-time{font-size:.72rem; color:#a39c8f; margin-top:6px;}
+  .thread-msg.own{background:#f1e6d2;}
+
+  /* ---------- Avatars (initiales) ---------- */
+  .avatar-sm{
+    width:36px; height:36px; border-radius:50%; flex-shrink:0; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; font-size:.92rem; color:var(--white);
+  }
+  .avatar-sm img{width:100%; height:100%; object-fit:cover; display:block;}
+  .thread-item .avatar-sm{width:38px; height:38px; font-size:.95rem;}
+  .collab-user-chip{display:inline-flex; align-items:center; gap:8px; vertical-align:middle;}
+  .collab-user-chip .avatar-sm{width:26px; height:26px; font-size:.7rem;}
+
+  /* ---------- Suppression d'un message ---------- */
+  .msg-delete-btn{
+    background:none; border:none; cursor:pointer; flex-shrink:0; padding:2px 6px;
+    color:#a39c8f; font-family:'JetBrains Mono',monospace; font-size:.78rem;
+    border-radius:4px; transition:color .15s ease, background .15s ease;
+  }
+  .msg-delete-btn:hover{color:#b3261e; background:rgba(179,38,30,0.08);}
+
+  /* ---------- Notifications (toasts) ---------- */
+  #toastStack{
+    position:fixed; bottom:22px; right:22px; z-index:2000;
+    display:flex; flex-direction:column; gap:10px; max-width:320px;
+  }
+  .toast-notif{
+    background:var(--ink); color:var(--paper); border-radius:8px; padding:14px 16px;
+    box-shadow:0 14px 30px -10px rgba(15,26,48,0.55); font-size:.88rem; line-height:1.4;
+    display:flex; gap:10px; align-items:flex-start; opacity:0; transform:translateY(10px);
+    animation:toastIn .25s ease forwards;
+  }
+  .toast-notif strong{color:var(--clay); display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px; font-family:'JetBrains Mono',monospace;}
+  .toast-notif.leaving{animation:toastOut .2s ease forwards;}
+  @keyframes toastIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes toastOut{from{opacity:1; transform:translateY(0);} to{opacity:0; transform:translateY(10px);}}
+
+  /* ---------- Chat en direct (bulle flottante visiteurs) ---------- */
+  .chat-widget{position:fixed; left:22px; bottom:22px; z-index:1900; font-family:'Work Sans',sans-serif;}
+  .chat-bubble{
+    width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;
+    background:var(--ink); color:var(--paper); box-shadow:0 14px 30px -10px rgba(15,26,48,0.55);
+    display:flex; align-items:center; justify-content:center; position:relative;
+    transition:transform .15s ease;
+  }
+  .chat-bubble:hover{transform:translateY(-2px);}
+  .chat-bubble svg{width:26px; height:26px;}
+  .chat-badge{
+    position:absolute; top:-4px; right:-4px; background:var(--clay); color:var(--white);
+    font-family:'JetBrains Mono',monospace; font-size:.68rem; font-weight:600;
+    min-width:19px; height:19px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    padding:0 4px; border:2px solid var(--paper);
+  }
+  .chat-window{
+    position:absolute; bottom:74px; left:0; width:328px; max-width:calc(100vw - 44px);
+    background:var(--white); border-radius:10px; box-shadow:0 24px 50px -14px rgba(15,26,48,0.5);
+    display:none; flex-direction:column; overflow:hidden; max-height:min(70vh, 480px);
+    border:1px solid var(--line);
+  }
+  .chat-window.open{display:flex;}
+  .chat-window-head{
+    background:var(--ink); color:var(--paper); padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .chat-window-head .cw-title{font-family:'Roboto',sans-serif; font-weight:600; font-size:.98rem;}
+  .chat-window-head .cw-sub{font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--clay); display:flex; align-items:center; gap:5px; margin-top:2px;}
+  .cw-dot{width:7px; height:7px; border-radius:50%; background:#5aa86a; display:inline-block;}
+  .chat-close-btn{background:none; border:none; color:var(--paper); cursor:pointer; font-size:1.2rem; line-height:1; padding:2px 4px;}
+  .chat-name-gate{padding:20px 18px; display:flex; flex-direction:column; gap:12px;}
+  .chat-name-gate p{font-size:.88rem; color:#5a544c; margin:0;}
+  .chat-name-gate input{
+    padding:12px 14px; border:1px solid var(--line); border-radius:3px; background:var(--paper);
+    font-family:'Work Sans',sans-serif; font-size:.92rem; color:var(--charcoal);
+  }
+  .chat-messages{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:var(--paper);}
+  .chat-msg{max-width:82%; padding:9px 12px; border-radius:12px; font-size:.88rem; line-height:1.45; background:var(--white); align-self:flex-start; box-shadow:0 2px 6px rgba(27,42,74,0.06);}
+  .chat-msg .cm-meta{font-family:'JetBrains Mono',monospace; font-size:.65rem; color:#a39c8f; margin-top:4px;}
+  .chat-msg.mine{align-self:flex-end; background:var(--clay); color:var(--white);}
+  .chat-msg.mine .cm-meta{color:rgba(255,255,255,0.75);}
+  .chat-empty-hint{color:#8a8378; font-size:.85rem; text-align:center; margin:auto;}
+  .chat-input-form{display:flex; gap:8px; padding:12px; border-top:1px solid var(--line); background:var(--white);}
+  .chat-input-form input{
+    flex:1; padding:11px 13px; border:1px solid var(--line); border-radius:20px; background:var(--paper);
+    font-family:'Work Sans',sans-serif; font-size:.9rem; color:var(--charcoal);
+  }
+  .chat-input-form button{
+    width:38px; height:38px; border-radius:50%; border:none; background:var(--ink); color:var(--paper);
+    cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  }
+  .chat-input-form button svg{width:16px; height:16px;}
+  @media (max-width:480px){
+    .chat-widget{left:12px; bottom:12px;}
+    .chat-window{left:-2px;}
+  }
+
+  /* ---------- Messages visiteurs (staff) ---------- */
+  .visitor-item{
+    display:flex; align-items:center; gap:12px; width:100%; padding:14px 4px; border-top:1px solid var(--line);
+    background:none; border-left:none; border-right:none; border-bottom:none; text-align:left; cursor:pointer;
+    font-family:'Work Sans',sans-serif;
+  }
+  .visitor-item:hover{background:var(--paper);}
+  .visitor-item .v-name{font-weight:500; color:var(--ink); font-size:.96rem; display:flex; align-items:center; gap:8px;}
+  .visitor-item .v-preview{font-size:.8rem; color:#8a8378; margin-top:3px; max-width:340px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .visitor-unread-dot{width:9px; height:9px; border-radius:50%; background:var(--clay); flex-shrink:0;}
+
+  /* ---------- Espace Administration (gestion des rôles admin) ---------- */
+  .admin-row{display:flex; align-items:center; justify-content:space-between; gap:14px; width:100%; padding:14px 4px; border-top:1px solid var(--line); font-family:'Work Sans',sans-serif;}
+  .admin-row:first-child{border-top:none;}
+  .admin-row .a-infos{display:flex; align-items:center; gap:12px; min-width:0;}
+  .admin-row .a-name{font-weight:500; color:var(--ink); font-size:.96rem; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .admin-row .a-email{font-size:.8rem; color:#8a8378; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .admin-badge{font-family:'JetBrains Mono',monospace; font-size:.62rem; letter-spacing:.03em; padding:3px 9px; border-radius:20px; background:var(--clay); color:var(--white); flex-shrink:0;}
+  .admin-toggle-btn{padding:7px 14px; font-size:.8rem; border-radius:20px; border:1px solid var(--line); background:var(--white); color:var(--ink); cursor:pointer; font-family:'Work Sans',sans-serif; white-space:nowrap; flex-shrink:0;}
+  .admin-toggle-btn:hover{border-color:var(--clay); color:var(--clay);}
+  .admin-toggle-btn.is-admin{border-color:var(--ink); background:var(--ink); color:var(--paper);}
+  .admin-toggle-btn.is-admin:hover{background:#b3402a; border-color:#b3402a; color:var(--white);}
   .forum-reply-form{display:flex; flex-direction:column; gap:10px;}
   .forum-reply-form textarea{
     padding:13px 16px; border:1px solid var(--line); border-radius:3px; background:var(--white);
@@ -632,6 +750,41 @@
 </style>
 </head>
 <body>
+<div id="toastStack" aria-live="polite"></div>
+
+<!-- ---------- Chat en direct (visiteurs) ---------- -->
+<div class="chat-widget" id="chatWidget">
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-window-head">
+      <div>
+        <div class="cw-title">Discuter avec Solo</div>
+        <div class="cw-sub"><span class="cw-dot"></span>Réponse en direct</div>
+      </div>
+      <button type="button" class="chat-close-btn" id="chatCloseBtn" aria-label="Fermer le chat">&times;</button>
+    </div>
+
+    <div class="chat-name-gate" id="chatNameGate">
+      <p>Une question, un projet en tête ? Écrivez-moi, je réponds dès que possible.</p>
+      <input type="text" id="chatNameInput" placeholder="Votre prénom" maxlength="60">
+      <button type="button" class="btn btn-primary" id="chatNameStart">Démarrer la discussion</button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages" hidden>
+      <p class="chat-empty-hint" id="chatEmptyHint">Dites bonjour 👋, votre message arrive en direct.</p>
+    </div>
+    <form class="chat-input-form" id="chatInputForm" hidden novalidate>
+      <input type="text" id="chatInputText" placeholder="Écrire un message..." maxlength="2000" autocomplete="off">
+      <button type="submit" aria-label="Envoyer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
+    </form>
+  </div>
+
+  <button type="button" class="chat-bubble" id="chatBubbleBtn" aria-label="Ouvrir le chat en direct">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+    <span class="chat-badge" id="chatBadge" hidden>0</span>
+  </button>
+</div>
 
 <header class="site">
   <nav class="wrap">
@@ -1576,10 +1729,16 @@
 <section class="alt collab-space" id="collabSpace" hidden>
   <div class="wrap">
     <span class="eyebrow">Espace Collaborateur</span>
-    <h2>Forum des membres</h2>
-    <p class="section-lede">Connecté en tant que <strong id="collabUserLabel"></strong>. <button type="button" class="link-btn" id="collabLogoutBtn">Se déconnecter</button></p>
+    <h2>Espace membres</h2>
+    <p class="section-lede">Connecté en tant que <span class="collab-user-chip" id="collabUserChip"><span id="collabUserAvatar"></span><strong id="collabUserLabel"></strong></span>. <button type="button" class="link-btn" id="collabLogoutBtn">Se déconnecter</button></p>
 
-    <div class="forum-layout">
+    <div class="collab-tabs">
+      <button type="button" class="collab-tab active" id="spaceTabForum">Forum des membres</button>
+      <button type="button" class="collab-tab" id="spaceTabVisitors">Messages visiteurs <span class="chat-badge" id="visitorTabBadge" hidden>0</span></button>
+      <button type="button" class="collab-tab" id="spaceTabAdmin" hidden>Administration</button>
+    </div>
+
+    <div class="forum-layout" id="spacePanelForum">
       <div class="forum-panel" id="forumListPanel">
         <form class="forum-new-thread" id="newThreadForm" novalidate>
           <input type="text" id="newThreadTitle" placeholder="Titre d'une nouvelle discussion..." maxlength="140" required>
@@ -1601,6 +1760,34 @@
           <button type="submit" class="btn btn-primary">Répondre</button>
         </form>
         <span class="modal-error" id="errReply">Merci d'écrire un message.</span>
+      </div>
+    </div>
+
+    <div class="forum-layout" id="spacePanelVisitors" hidden>
+      <div class="forum-panel" id="visitorListPanel">
+        <div class="thread-list" id="visitorList">
+          <p class="forum-empty" id="visitorListEmpty">Aucun message de visiteur pour le moment.</p>
+        </div>
+      </div>
+
+      <div class="forum-panel" id="visitorThreadPanel" hidden>
+        <button type="button" class="link-btn" id="backToVisitors">&larr; Retour aux messages visiteurs</button>
+        <h3 id="visitorViewTitle"></h3>
+        <div class="thread-messages" id="visitorMessages"></div>
+        <form class="forum-reply-form" id="visitorReplyForm" novalidate>
+          <textarea id="visitorReplyText" placeholder="Écrire une réponse au visiteur..." maxlength="2000" required></textarea>
+          <button type="submit" class="btn btn-primary">Répondre</button>
+        </form>
+        <span class="modal-error" id="errVisitorReply">Merci d'écrire un message.</span>
+      </div>
+    </div>
+
+    <div class="forum-layout" id="spacePanelAdmin" hidden>
+      <div class="forum-panel" style="width:100%;">
+        <p class="section-lede" style="margin:0 0 10px;">Les comptes marqués <strong>Admin</strong> peuvent voir et répondre aux messages visiteurs, et gérer les autres admins. Seul un admin peut promouvoir ou révoquer un autre compte.</p>
+        <div class="thread-list" id="adminUserList">
+          <p class="forum-empty" id="adminUserListEmpty">Aucun membre inscrit pour le moment.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -2299,12 +2486,17 @@
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
   import {
     getFirestore, collection, addDoc, query, orderBy, onSnapshot,
-    serverTimestamp, doc
+    serverTimestamp, doc, deleteDoc, setDoc, updateDoc, getDoc
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+  import {
+    getDatabase, ref, push, set, update, onValue, get,
+    query as rtdbQuery, orderByChild, serverTimestamp as rtdbServerTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDhdBcF37w7ZZBdTWVVVNaZE-MhZMtAdsU",
     authDomain: "mon-site-skkoulibaly.firebaseapp.com",
+    databaseURL: "https://mon-site-skkoulibaly-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "mon-site-skkoulibaly",
     storageBucket: "mon-site-skkoulibaly.firebasestorage.app",
     messagingSenderId: "367698551446",
@@ -2314,7 +2506,8 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const db = getFirestore(app);
+  const db = getFirestore(app);       // Firestore : réservé au forum des membres
+  const rtdb = getDatabase(app);      // Realtime Database : réservé au chat visiteurs
 
   // ---- Éléments DOM ----
   const collabForm = document.getElementById('collabForm');
@@ -2346,12 +2539,93 @@
   const replyText = document.getElementById('replyText');
   const errReply = document.getElementById('errReply');
 
+  // ---- Onglets Espace membres ----
+  const spaceTabForum = document.getElementById('spaceTabForum');
+  const spaceTabVisitors = document.getElementById('spaceTabVisitors');
+  const spaceTabAdmin = document.getElementById('spaceTabAdmin');
+  const spacePanelForum = document.getElementById('spacePanelForum');
+  const spacePanelVisitors = document.getElementById('spacePanelVisitors');
+  const spacePanelAdmin = document.getElementById('spacePanelAdmin');
+  const visitorTabBadge = document.getElementById('visitorTabBadge');
+  const adminUserList = document.getElementById('adminUserList');
+  const adminUserListEmpty = document.getElementById('adminUserListEmpty');
+
+  // ---- Messages visiteurs (staff) ----
+  const visitorList = document.getElementById('visitorList');
+  const visitorListEmpty = document.getElementById('visitorListEmpty');
+  const visitorListPanel = document.getElementById('visitorListPanel');
+  const visitorThreadPanel = document.getElementById('visitorThreadPanel');
+  const visitorViewTitle = document.getElementById('visitorViewTitle');
+  const visitorMessages = document.getElementById('visitorMessages');
+  const backToVisitors = document.getElementById('backToVisitors');
+  const visitorReplyForm = document.getElementById('visitorReplyForm');
+  const visitorReplyText = document.getElementById('visitorReplyText');
+  const errVisitorReply = document.getElementById('errVisitorReply');
+
+  // ---- Chat en direct (bulle visiteurs) ----
+  const chatWidget = document.getElementById('chatWidget');
+  const chatBubbleBtn = document.getElementById('chatBubbleBtn');
+  const chatBadge = document.getElementById('chatBadge');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatCloseBtn = document.getElementById('chatCloseBtn');
+  const chatNameGate = document.getElementById('chatNameGate');
+  const chatNameInput = document.getElementById('chatNameInput');
+  const chatNameStart = document.getElementById('chatNameStart');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatEmptyHint = document.getElementById('chatEmptyHint');
+  const chatInputForm = document.getElementById('chatInputForm');
+  const chatInputText = document.getElementById('chatInputText');
+
   let unsubThreads = null;
   let unsubMessages = null;
+  let unsubVisitorList = null;
+  let unsubVisitorMessages = null;
+  let unsubAdminUsers = null;
+  let unsubAdminAdmins = null;
+  let currentVisitorId = null;
   let currentThreadId = null;
 
   function displayNameFor(user) {
     return user.displayName || user.email;
+  }
+
+  // ---- Avatars (initiales générées, pas de photo) ----
+  const AVATAR_PALETTE = ['#D98E3D', '#4C6B54', '#1B2A4A', '#8a5a44', '#6b5b95', '#a03c50'];
+  function couleurAvatar(cle) {
+    let h = 0;
+    for (let i = 0; i < cle.length; i++) h = (h * 31 + cle.charCodeAt(i)) >>> 0;
+    return AVATAR_PALETTE[h % AVATAR_PALETTE.length];
+  }
+  function initialesDe(nom) {
+    const propre = (nom || '?').trim();
+    const parts = propre.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+    return propre.slice(0, 2).toUpperCase() || '?';
+  }
+  function avatarHTML(nom, cle) {
+    const bg = couleurAvatar(cle || nom || '?');
+    const div = document.createElement('div');
+    div.className = 'avatar-sm';
+    div.style.background = bg;
+    div.textContent = initialesDe(nom);
+    div.title = nom || '';
+    return div;
+  }
+
+  // ---- Notifications (toasts internes) ----
+  const toastStack = document.getElementById('toastStack');
+  function notifier(titre, texte) {
+    if (!toastStack) return;
+    const el = document.createElement('div');
+    el.className = 'toast-notif';
+    el.innerHTML = `<span><strong></strong><span class="t-txt"></span></span>`;
+    el.querySelector('strong').textContent = titre;
+    el.querySelector('.t-txt').textContent = texte;
+    toastStack.appendChild(el);
+    setTimeout(() => {
+      el.classList.add('leaving');
+      setTimeout(() => el.remove(), 220);
+    }, 5000);
   }
 
   // ---- Inscription / Connexion ----
@@ -2382,6 +2656,11 @@
         if (mode === 'register') {
           const cred = await createUserWithEmailAndPassword(auth, emailVal, passVal);
           await updateProfile(cred.user, { displayName: nameVal });
+          await set(ref(rtdb, 'users/' + cred.user.uid), {
+            name: nameVal,
+            email: emailVal,
+            createdAt: rtdbServerTimestamp()
+          }).catch(() => {});
         } else {
           await signInWithEmailAndPassword(auth, emailVal, passVal);
         }
@@ -2411,45 +2690,142 @@
   if (collabLogoutBtn) collabLogoutBtn.addEventListener('click', () => signOut(auth));
 
   // ---- État de connexion ----
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
     window.collabUser = user;
+    window.isAdminStaff = false;
     if (user) {
       collabSpace.hidden = false;
       collabUserLabel.textContent = displayNameFor(user);
+      const collabUserAvatar = document.getElementById('collabUserAvatar');
+      if (collabUserAvatar) {
+        collabUserAvatar.innerHTML = '';
+        collabUserAvatar.appendChild(avatarHTML(displayNameFor(user), user.uid));
+      }
       if (navCollabLink) navCollabLink.textContent = 'Mon espace';
       demarrerEcouteFils();
+
+      // Tient à jour l'annuaire des membres (utile pour l'espace Administration)
+      update(ref(rtdb, 'users/' + user.uid), {
+        name: displayNameFor(user),
+        email: user.email
+      }).catch(() => {});
+
+      // Vérifie le rôle admin (nœud /admins/{uid} dans Realtime Database, lisible uniquement par un admin déjà en place)
+      try {
+        const adminSnap = await get(ref(rtdb, 'admins/' + user.uid));
+        window.isAdminStaff = adminSnap.exists() && adminSnap.val() === true;
+      } catch (err) {
+        window.isAdminStaff = false;
+      }
+
+      if (spaceTabVisitors) spaceTabVisitors.hidden = !window.isAdminStaff;
+      if (spaceTabAdmin) spaceTabAdmin.hidden = !window.isAdminStaff;
+      if (window.isAdminStaff) {
+        demarrerEcouteVisiteurs();
+        demarrerEcouteAdmin();
+      } else if (spaceTabForum) {
+        // Utilisateur non-admin : on s'assure que l'onglet Forum reste affiché
+        spaceTabForum.classList.add('active');
+        if (spaceTabVisitors) spaceTabVisitors.classList.remove('active');
+        if (spaceTabAdmin) spaceTabAdmin.classList.remove('active');
+        spacePanelForum.hidden = false;
+        spacePanelVisitors.hidden = true;
+        if (spacePanelAdmin) spacePanelAdmin.hidden = true;
+      }
     } else {
       collabSpace.hidden = true;
       if (navCollabLink) navCollabLink.textContent = 'Espace Collaborateur';
+      if (spaceTabVisitors) spaceTabVisitors.hidden = true;
+      if (spaceTabAdmin) spaceTabAdmin.hidden = true;
       if (unsubThreads) { unsubThreads(); unsubThreads = null; }
       if (unsubMessages) { unsubMessages(); unsubMessages = null; }
+      if (unsubVisitorList) { unsubVisitorList(); unsubVisitorList = null; }
+      if (unsubVisitorMessages) { unsubVisitorMessages(); unsubVisitorMessages = null; }
+      if (unsubAdminUsers) { unsubAdminUsers(); unsubAdminUsers = null; }
+      if (unsubAdminAdmins) { unsubAdminAdmins(); unsubAdminAdmins = null; }
       afficherListeFils();
+      afficherListeVisiteurs();
     }
   });
 
+  // ---- Onglets Espace membres ----
+  if (spaceTabForum && spaceTabVisitors) {
+    spaceTabForum.addEventListener('click', () => {
+      spaceTabForum.classList.add('active');
+      spaceTabVisitors.classList.remove('active');
+      if (spaceTabAdmin) spaceTabAdmin.classList.remove('active');
+      spacePanelForum.hidden = false;
+      spacePanelVisitors.hidden = true;
+      if (spacePanelAdmin) spacePanelAdmin.hidden = true;
+    });
+    spaceTabVisitors.addEventListener('click', () => {
+      if (!window.isAdminStaff) return; // sécurité côté client, en plus des règles Realtime Database
+      spaceTabVisitors.classList.add('active');
+      spaceTabForum.classList.remove('active');
+      if (spaceTabAdmin) spaceTabAdmin.classList.remove('active');
+      spacePanelVisitors.hidden = false;
+      spacePanelForum.hidden = true;
+      if (spacePanelAdmin) spacePanelAdmin.hidden = true;
+    });
+  }
+  if (spaceTabAdmin) {
+    spaceTabAdmin.addEventListener('click', () => {
+      if (!window.isAdminStaff) return; // sécurité côté client, en plus des règles Realtime Database
+      spaceTabAdmin.classList.add('active');
+      spaceTabForum.classList.remove('active');
+      spaceTabVisitors.classList.remove('active');
+      spacePanelAdmin.hidden = false;
+      spacePanelForum.hidden = true;
+      spacePanelVisitors.hidden = true;
+    });
+  }
+
   // ---- Liste des discussions (temps réel) ----
+  let premierChargementFils = true;
   function demarrerEcouteFils() {
     if (unsubThreads) unsubThreads();
+    premierChargementFils = true;
     const q = query(collection(db, 'threads'), orderBy('createdAt', 'desc'));
     unsubThreads = onSnapshot(q, (snap) => {
       threadList.innerHTML = '';
       if (snap.empty) {
         threadListEmpty.style.display = 'block';
-        return;
+      } else {
+        threadListEmpty.style.display = 'none';
+        snap.forEach((docSnap) => {
+          const t = docSnap.data();
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'thread-item';
+          const date = t.createdAt ? t.createdAt.toDate().toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric'}) : '';
+          const auteur = t.authorName || t.authorEmail || 'membre';
+          btn.appendChild(avatarHTML(auteur, t.authorUid));
+          const infos = document.createElement('span');
+          infos.innerHTML = `<span class="t-title"></span><br><span class="t-meta"></span>`;
+          infos.querySelector('.t-title').textContent = t.title || '(sans titre)';
+          infos.querySelector('.t-meta').textContent = 'Par ' + auteur + (date ? ' · ' + date : '');
+          btn.appendChild(infos);
+          const arrow = document.createElement('span');
+          arrow.className = 't-arrow';
+          arrow.innerHTML = '&rarr;';
+          btn.appendChild(arrow);
+          btn.addEventListener('click', () => ouvrirFil(docSnap.id, t.title));
+          threadList.appendChild(btn);
+        });
       }
-      threadListEmpty.style.display = 'none';
-      snap.forEach((docSnap) => {
-        const t = docSnap.data();
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'thread-item';
-        const date = t.createdAt ? t.createdAt.toDate().toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric'}) : '';
-        btn.innerHTML = `<span><span class="t-title"></span><br><span class="t-meta"></span></span><span class="t-arrow">&rarr;</span>`;
-        btn.querySelector('.t-title').textContent = t.title || '(sans titre)';
-        btn.querySelector('.t-meta').textContent = 'Par ' + (t.authorName || t.authorEmail || 'membre') + (date ? ' · ' + date : '');
-        btn.addEventListener('click', () => ouvrirFil(docSnap.id, t.title));
-        threadList.appendChild(btn);
-      });
+
+      // Notification : nouvelle discussion créée par un autre membre
+      if (!premierChargementFils) {
+        snap.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            const t = change.doc.data();
+            if (window.collabUser && t.authorUid !== window.collabUser.uid) {
+              notifier('Nouvelle discussion', (t.authorName || t.authorEmail || 'Un membre') + ' a lancé « ' + (t.title || 'sans titre') + ' »');
+            }
+          }
+        });
+      }
+      premierChargementFils = false;
     });
   }
 
@@ -2487,22 +2863,64 @@
     threadMessages.innerHTML = '';
 
     if (unsubMessages) unsubMessages();
+    let premierChargementMessages = true;
     const msgsRef = collection(db, 'threads', threadId, 'messages');
     const q = query(msgsRef, orderBy('createdAt', 'asc'));
     unsubMessages = onSnapshot(q, (snap) => {
       threadMessages.innerHTML = '';
       snap.forEach((docSnap) => {
         const m = docSnap.data();
+        const estAuteur = window.collabUser && m.authorUid === window.collabUser.uid;
+        const auteur = m.authorName || m.authorEmail || 'membre';
         const el = document.createElement('div');
-        el.className = 'thread-msg';
+        el.className = 'thread-msg' + (estAuteur ? ' own' : '');
+
         const time = m.createdAt ? m.createdAt.toDate().toLocaleString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
-        el.innerHTML = `<div class="m-author"></div><div class="m-text"></div><div class="m-time"></div>`;
-        el.querySelector('.m-author').textContent = m.authorName || m.authorEmail || 'membre';
-        el.querySelector('.m-text').textContent = m.text || '';
-        el.querySelector('.m-time').textContent = time;
+
+        el.appendChild(avatarHTML(auteur, m.authorUid));
+
+        const body = document.createElement('div');
+        body.className = 'msg-body';
+        body.innerHTML = `<div class="msg-head"><div class="m-author"></div></div><div class="m-text"></div><div class="m-time"></div>`;
+        body.querySelector('.m-author').textContent = auteur;
+        body.querySelector('.m-text').textContent = m.text || '';
+        body.querySelector('.m-time').textContent = time;
+
+        if (estAuteur) {
+          const delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.className = 'msg-delete-btn';
+          delBtn.textContent = 'Supprimer';
+          delBtn.addEventListener('click', async () => {
+            if (!confirm('Supprimer définitivement ce message ?')) return;
+            delBtn.disabled = true;
+            try {
+              await deleteDoc(doc(db, 'threads', threadId, 'messages', docSnap.id));
+            } catch (err) {
+              delBtn.disabled = false;
+              notifier('Erreur', "Impossible de supprimer ce message pour le moment.");
+            }
+          });
+          body.querySelector('.msg-head').appendChild(delBtn);
+        }
+
+        el.appendChild(body);
         threadMessages.appendChild(el);
       });
       threadMessages.scrollTop = threadMessages.scrollHeight;
+
+      // Notification : nouveau message d'un autre membre dans le fil ouvert
+      if (!premierChargementMessages) {
+        snap.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            const m = change.doc.data();
+            if (window.collabUser && m.authorUid !== window.collabUser.uid) {
+              notifier('Nouveau message', (m.authorName || m.authorEmail || 'Un membre') + ' : ' + (m.text || '').slice(0, 80));
+            }
+          }
+        });
+      }
+      premierChargementMessages = false;
     });
   }
 
@@ -2524,6 +2942,366 @@
       replyText.value = '';
       errReply.classList.remove('show');
     });
+  }
+
+  // ==================== MESSAGES VISITEURS (côté équipe) — Realtime Database ====================
+  let premierChargementVisiteurs = true;
+  let dernierMessageParVisiteur = {};
+  function demarrerEcouteVisiteurs() {
+    if (unsubVisitorList) unsubVisitorList();
+    premierChargementVisiteurs = true;
+    dernierMessageParVisiteur = {};
+    const visitorsRef = rtdbQuery(ref(rtdb, 'liveChats'), orderByChild('lastAt'));
+    unsubVisitorList = onValue(visitorsRef, (snap) => {
+      visitorList.innerHTML = '';
+      let unreadCount = 0;
+      const entries = [];
+      snap.forEach((childSnap) => {
+        entries.push({ id: childSnap.key, v: childSnap.val() || {} });
+      });
+      entries.reverse(); // orderByChild trie en ordre croissant : on inverse pour avoir le plus récent d'abord
+
+      if (entries.length === 0) {
+        visitorListEmpty.style.display = 'block';
+      } else {
+        visitorListEmpty.style.display = 'none';
+        entries.forEach(({ id, v }) => {
+          if (v.unreadForStaff) unreadCount++;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'visitor-item';
+          btn.appendChild(avatarHTML(v.name || 'Visiteur', id));
+
+          const infos = document.createElement('span');
+          const nameLine = document.createElement('span');
+          nameLine.className = 'v-name';
+          nameLine.textContent = v.name || 'Visiteur anonyme';
+          if (v.unreadForStaff) {
+            const dot = document.createElement('span');
+            dot.className = 'visitor-unread-dot';
+            nameLine.appendChild(dot);
+          }
+          const preview = document.createElement('span');
+          preview.className = 'v-preview';
+          preview.textContent = v.lastMessage || '';
+          infos.appendChild(nameLine);
+          infos.appendChild(document.createElement('br'));
+          infos.appendChild(preview);
+          btn.appendChild(infos);
+
+          btn.addEventListener('click', () => ouvrirConversationVisiteur(id, v.name));
+          visitorList.appendChild(btn);
+
+          // Notification en direct : nouveau message d'un visiteur (le contenu du dernier message a changé)
+          if (!premierChargementVisiteurs && v.unreadForStaff && dernierMessageParVisiteur[id] !== v.lastMessage) {
+            notifier('Message visiteur', (v.name || 'Un visiteur') + ' : ' + (v.lastMessage || '').slice(0, 80));
+          }
+          dernierMessageParVisiteur[id] = v.lastMessage;
+        });
+      }
+
+      if (visitorTabBadge) {
+        visitorTabBadge.hidden = unreadCount === 0;
+        visitorTabBadge.textContent = String(unreadCount);
+      }
+
+      premierChargementVisiteurs = false;
+    });
+  }
+
+  function afficherListeVisiteurs() {
+    if (!visitorListPanel) return;
+    visitorListPanel.hidden = false;
+    visitorThreadPanel.hidden = true;
+    currentVisitorId = null;
+    if (unsubVisitorMessages) { unsubVisitorMessages(); unsubVisitorMessages = null; }
+  }
+
+  function ouvrirConversationVisiteur(visitorId, name) {
+    currentVisitorId = visitorId;
+    visitorViewTitle.textContent = name || 'Visiteur anonyme';
+    visitorListPanel.hidden = true;
+    visitorThreadPanel.hidden = false;
+    visitorMessages.innerHTML = '';
+
+    update(ref(rtdb, 'liveChats/' + visitorId), { unreadForStaff: false }).catch(() => {});
+
+    if (unsubVisitorMessages) unsubVisitorMessages();
+    const messagesRef = rtdbQuery(ref(rtdb, 'liveChats/' + visitorId + '/messages'), orderByChild('createdAt'));
+    unsubVisitorMessages = onValue(messagesRef, (snap) => {
+      visitorMessages.innerHTML = '';
+      snap.forEach((childSnap) => {
+        const m = childSnap.val() || {};
+        const estStaff = m.sender === 'staff';
+        const el = document.createElement('div');
+        el.className = 'thread-msg' + (estStaff ? ' own' : '');
+        const time = m.createdAt ? new Date(m.createdAt).toLocaleString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
+
+        el.appendChild(avatarHTML(m.authorName || (estStaff ? 'Équipe' : 'Visiteur'), estStaff ? (m.authorUid || 'staff') : visitorId));
+
+        const body = document.createElement('div');
+        body.className = 'msg-body';
+        body.innerHTML = `<div class="msg-head"><div class="m-author"></div></div><div class="m-text"></div><div class="m-time"></div>`;
+        body.querySelector('.m-author').textContent = m.authorName || (estStaff ? 'Équipe SKK' : 'Visiteur');
+        body.querySelector('.m-text').textContent = m.text || '';
+        body.querySelector('.m-time').textContent = time;
+
+        el.appendChild(body);
+        visitorMessages.appendChild(el);
+      });
+      visitorMessages.scrollTop = visitorMessages.scrollHeight;
+    });
+  }
+
+  if (backToVisitors) backToVisitors.addEventListener('click', afficherListeVisiteurs);
+
+  if (visitorReplyForm) {
+    visitorReplyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = visitorReplyText.value.trim();
+      errVisitorReply.classList.toggle('show', text.length === 0);
+      if (!text || !currentVisitorId || !window.collabUser || !window.isAdminStaff) return;
+      await push(ref(rtdb, 'liveChats/' + currentVisitorId + '/messages'), {
+        text,
+        sender: 'staff',
+        authorUid: window.collabUser.uid,
+        authorName: displayNameFor(window.collabUser),
+        createdAt: rtdbServerTimestamp()
+      });
+      await update(ref(rtdb, 'liveChats/' + currentVisitorId), {
+        lastMessage: text,
+        lastAt: rtdbServerTimestamp(),
+        unreadForVisitor: true,
+        unreadForStaff: false
+      });
+      visitorReplyText.value = '';
+      errVisitorReply.classList.remove('show');
+    });
+  }
+
+  // ==================== ADMINISTRATION (gestion des rôles admin) ====================
+  let adminUsersCache = {};
+  let adminFlagsCache = {};
+
+  function renderAdminList() {
+    if (!adminUserList) return;
+    const uids = Object.keys(adminUsersCache);
+    adminUserList.innerHTML = '';
+
+    if (uids.length === 0) {
+      adminUserList.appendChild(adminUserListEmpty);
+      adminUserListEmpty.style.display = 'block';
+      return;
+    }
+    adminUserListEmpty.style.display = 'none';
+
+    // Tri alphabétique par nom
+    uids.sort((a, b) => (adminUsersCache[a].name || '').localeCompare(adminUsersCache[b].name || ''));
+
+    uids.forEach((uid) => {
+      const u = adminUsersCache[uid] || {};
+      const estAdmin = !!adminFlagsCache[uid];
+      const estSoiMeme = window.collabUser && uid === window.collabUser.uid;
+
+      const row = document.createElement('div');
+      row.className = 'admin-row';
+
+      const infos = document.createElement('div');
+      infos.className = 'a-infos';
+      infos.appendChild(avatarHTML(u.name || u.email || 'Membre', uid));
+
+      const texte = document.createElement('span');
+      const nameLine = document.createElement('span');
+      nameLine.className = 'a-name';
+      nameLine.textContent = (u.name || 'Membre sans nom') + (estSoiMeme ? ' (vous)' : '');
+      if (estAdmin) {
+        const badge = document.createElement('span');
+        badge.className = 'admin-badge';
+        badge.textContent = 'ADMIN';
+        nameLine.appendChild(badge);
+      }
+      const emailLine = document.createElement('span');
+      emailLine.className = 'a-email';
+      emailLine.textContent = u.email || '';
+      texte.appendChild(nameLine);
+      texte.appendChild(document.createElement('br'));
+      texte.appendChild(emailLine);
+      infos.appendChild(texte);
+      row.appendChild(infos);
+
+      const toggleBtn = document.createElement('button');
+      toggleBtn.type = 'button';
+      toggleBtn.className = 'admin-toggle-btn' + (estAdmin ? ' is-admin' : '');
+      toggleBtn.textContent = estAdmin ? 'Retirer admin' : 'Nommer admin';
+      toggleBtn.addEventListener('click', () => basculerAdmin(uid, estAdmin));
+      row.appendChild(toggleBtn);
+
+      adminUserList.appendChild(row);
+    });
+  }
+
+  async function basculerAdmin(uid, estActuellementAdmin) {
+    if (estActuellementAdmin && window.collabUser && uid === window.collabUser.uid) {
+      const confirme = window.confirm("Vous êtes sur le point de retirer vos propres droits admin. Continuer ?");
+      if (!confirme) return;
+    }
+    try {
+      await set(ref(rtdb, 'admins/' + uid), estActuellementAdmin ? null : true);
+    } catch (err) {
+      notifier('Erreur', "Impossible de modifier ce rôle. Réessayez.");
+    }
+  }
+
+  function demarrerEcouteAdmin() {
+    if (unsubAdminUsers) unsubAdminUsers();
+    if (unsubAdminAdmins) unsubAdminAdmins();
+
+    unsubAdminUsers = onValue(ref(rtdb, 'users'), (snap) => {
+      adminUsersCache = snap.val() || {};
+      renderAdminList();
+    });
+    unsubAdminAdmins = onValue(ref(rtdb, 'admins'), (snap) => {
+      adminFlagsCache = snap.val() || {};
+      renderAdminList();
+    });
+  }
+
+  // ==================== CHAT EN DIRECT (bulle flottante, côté visiteur) — Realtime Database ====================
+  function idVisiteurAleatoire() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  function getVisitorId() {
+    let id = localStorage.getItem('skk_chat_visitor_id');
+    if (!id) {
+      id = idVisiteurAleatoire();
+      localStorage.setItem('skk_chat_visitor_id', id);
+    }
+    return id;
+  }
+
+  if (chatWidget) {
+    const visitorId = getVisitorId();
+    let visitorName = localStorage.getItem('skk_chat_visitor_name') || '';
+    let chatListening = false;
+
+    function formatHeureChat(ts) {
+      return ts ? new Date(ts).toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}) : '';
+    }
+
+    function demarrerEcouteChatVisiteur() {
+      if (chatListening) return;
+      chatListening = true;
+
+      onValue(ref(rtdb, 'liveChats/' + visitorId), (snap) => {
+        if (!snap.exists()) return;
+        const d = snap.val() || {};
+        if (d.unreadForVisitor && !chatWindow.classList.contains('open')) {
+          chatBadge.hidden = false;
+          chatBadge.textContent = '1';
+        } else if (!d.unreadForVisitor) {
+          chatBadge.hidden = true;
+        }
+      });
+
+      const messagesRef = rtdbQuery(ref(rtdb, 'liveChats/' + visitorId + '/messages'), orderByChild('createdAt'));
+      onValue(messagesRef, (snap) => {
+        chatMessages.innerHTML = '';
+        if (!snap.exists()) {
+          chatMessages.appendChild(chatEmptyHint);
+        } else {
+          snap.forEach((childSnap) => {
+            const m = childSnap.val() || {};
+            const bulle = document.createElement('div');
+            bulle.className = 'chat-msg' + (m.sender === 'visitor' ? ' mine' : '');
+            const texte = document.createElement('div');
+            texte.textContent = m.text || '';
+            const meta = document.createElement('div');
+            meta.className = 'cm-meta';
+            meta.textContent = (m.sender === 'visitor' ? 'Vous' : (m.authorName || 'Solo')) + ' · ' + formatHeureChat(m.createdAt);
+            bulle.appendChild(texte);
+            bulle.appendChild(meta);
+            chatMessages.appendChild(bulle);
+          });
+        }
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      });
+    }
+
+    function ouvrirFenetreChat() {
+      chatWindow.classList.add('open');
+      chatBadge.hidden = true;
+      if (visitorName) {
+        chatNameGate.hidden = true;
+        chatMessages.hidden = false;
+        chatInputForm.hidden = false;
+        demarrerEcouteChatVisiteur();
+        update(ref(rtdb, 'liveChats/' + visitorId), { unreadForVisitor: false }).catch(() => {});
+        chatInputText.focus();
+      } else {
+        chatNameGate.hidden = false;
+        chatMessages.hidden = true;
+        chatInputForm.hidden = true;
+        chatNameInput.focus();
+      }
+    }
+
+    chatBubbleBtn.addEventListener('click', () => {
+      if (chatWindow.classList.contains('open')) {
+        chatWindow.classList.remove('open');
+      } else {
+        ouvrirFenetreChat();
+      }
+    });
+    chatCloseBtn.addEventListener('click', () => chatWindow.classList.remove('open'));
+
+    chatNameStart.addEventListener('click', () => {
+      const nom = chatNameInput.value.trim();
+      if (!nom) { chatNameInput.focus(); return; }
+      visitorName = nom;
+      localStorage.setItem('skk_chat_visitor_name', nom);
+      update(ref(rtdb, 'liveChats/' + visitorId), {
+        name: nom,
+        createdAt: rtdbServerTimestamp(),
+        unreadForStaff: false,
+        unreadForVisitor: false
+      }).catch(() => {});
+      chatNameGate.hidden = true;
+      chatMessages.hidden = false;
+      chatInputForm.hidden = false;
+      demarrerEcouteChatVisiteur();
+      chatInputText.focus();
+    });
+
+    chatInputForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const texte = chatInputText.value.trim();
+      if (!texte) return;
+      chatInputText.value = '';
+      try {
+        await push(ref(rtdb, 'liveChats/' + visitorId + '/messages'), {
+          text: texte,
+          sender: 'visitor',
+          authorName: visitorName,
+          createdAt: rtdbServerTimestamp()
+        });
+        await update(ref(rtdb, 'liveChats/' + visitorId), {
+          name: visitorName,
+          lastMessage: texte,
+          lastAt: rtdbServerTimestamp(),
+          unreadForStaff: true
+        });
+      } catch (err) {
+        notifier('Erreur', "Le message n'a pas pu être envoyé. Réessayez.");
+      }
+    });
+
+    // Visiteur connu revenant sur le site : on écoute directement pour le badge de non-lu
+    if (visitorName) demarrerEcouteChatVisiteur();
   }
 </script>
 
