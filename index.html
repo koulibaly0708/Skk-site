@@ -32,7 +32,9 @@
     --max: 1180px;
   }
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; overflow-x:hidden;}
+  html{scroll-behavior:smooth; overflow-x:hidden; overflow-y:scroll; scrollbar-gutter:stable;}
+  /* L'espace collaborateur/administrateur s'ouvre désormais sur une page dédiée (espace.html) */
+  #collabSpace, #adminCollabSpace{display:none !important;}
   body{max-width:100%;}
   body{
     margin:0;
@@ -2380,7 +2382,7 @@
     navCollabLink.addEventListener('click', (e) => {
       e.preventDefault();
       if (window.collabUser) {
-        document.getElementById('collabSpace').scrollIntoView({behavior:'smooth'});
+        window.location.href = 'espace.html';
       } else {
         ouvrirCollabModal('collab');
       }
@@ -2392,10 +2394,10 @@
       e.preventDefault();
       if (window.collabUser) {
         if (window.isAdminStaff) {
-          document.getElementById('adminCollabSpace').scrollIntoView({behavior:'smooth'});
+          window.location.href = 'espace.html';
         } else {
           alert("Cet espace est réservé aux administrateurs du site. Rendez-vous dans « Mon espace » pour échanger avec l'administrateur.");
-          document.getElementById('collabSpace').scrollIntoView({behavior:'smooth'});
+          window.location.href = 'espace.html';
         }
       } else {
         ouvrirCollabModal('admin');
@@ -2769,7 +2771,7 @@
         } else {
           await signInWithEmailAndPassword(auth, emailVal, passVal);
         }
-        window.fermerCollabModal();
+        window.location.href = 'espace.html';
       } catch (err) {
         collabSendError.textContent = messageErreurFirebase(err.code);
         collabSendError.classList.add('show');
