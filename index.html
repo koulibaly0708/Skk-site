@@ -74,8 +74,7 @@
   /* ---------- NAV ---------- */
   header.site{
     position:sticky; top:0; z-index:100;
-    background:rgba(15,26,48,0.92);
-    backdrop-filter:blur(10px);
+    background:rgba(15,26,48,0.97);
     border-bottom:1px solid rgba(246,241,231,0.14);
   }
   header.site nav.wrap{position:relative;}
@@ -416,6 +415,10 @@
   .contact-list .ci-label{font-family:'JetBrains Mono',monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--sage); display:block; margin-bottom:3px;}
   .contact-list a{font-weight:600; color:var(--ink);}
   .contact-list a:hover{color:var(--clay);}
+  .social-icons{display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin:24px 0 8px;}
+  .social-icons .social-icon-link{display:flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:50%; border:1.5px solid var(--clay); background:transparent; color:var(--clay); transition:transform .15s, color .15s, border-color .15s;}
+  .social-icons .social-icon-link .ci-icon{width:21px; height:21px; margin-top:0;}
+  .social-icons .social-icon-link:hover{color:var(--ink); border-color:var(--ink); transform:translateY(-2px);}
   form.contact-form{display:flex; flex-direction:column; gap:14px;}
   form.contact-form input, form.contact-form textarea{
     padding:14px 16px; border:1px solid var(--line); border-radius:3px; background:var(--white);
@@ -494,7 +497,6 @@
   .thread-item .t-title{font-weight:500; color:var(--ink); font-size:.98rem;}
   .thread-item .t-meta{font-size:.8rem; color:#8a8378; margin-top:3px;}
   .thread-item .t-arrow{color:var(--clay); flex-shrink:0;}
-  #forumThreadPanel h3{margin-top:14px; font-size:1.3rem;}
   .thread-messages{display:flex; flex-direction:column; gap:14px; margin:20px 0; max-height:420px; overflow-y:auto;}
   .thread-msg{display:flex; gap:12px; align-items:flex-start; background:var(--paper); border-radius:8px; padding:14px 16px;}
   .thread-msg .msg-body{flex:1; min-width:0;}
@@ -543,7 +545,7 @@
   .chat-widget{position:fixed; left:22px; bottom:22px; z-index:1900; font-family:'Work Sans',sans-serif;}
   .chat-bubble{
     width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;
-    background:var(--ink); color:var(--paper); box-shadow:0 14px 30px -10px rgba(15,26,48,0.55);
+    background:var(--clay); color:var(--white); box-shadow:0 14px 30px -10px rgba(15,26,48,0.55);
     display:flex; align-items:center; justify-content:center; position:relative;
     transition:transform .15s ease;
   }
@@ -798,6 +800,7 @@
       <a href="#apropos">À propos</a>
       <a href="#faq">FAQ</a>
       <a href="#" id="navCollabLink">Espace Collaborateur</a>
+      <a href="#" id="navAdminSpaceLink">Espace Administrateur</a>
       <a href="#contact" class="btn btn-primary navcta">Contact</a>
     </div>
     <div class="nav-tools">
@@ -1516,14 +1519,28 @@
             <div><a href="mailto:skoulibaly124@gmail.com">skoulibaly124@gmail.com</a></div>
           </div>
         </li>
-        <li>
-          <svg class="ci-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-          <div>
-            <span class="ci-label">Facebook</span>
-            <div><a href="https://www.facebook.com/solo.koulibaly.9081" target="_blank" rel="noopener">Solo Koumana Koulibaly SKK</a></div>
-          </div>
-        </li>
       </ul>
+      <div class="social-icons">
+        <a class="social-icon-link" href="https://wa.me/224621109847" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg class="ci-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </a>
+        <a class="social-icon-link" href="https://www.facebook.com/solo.koulibaly.9081" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg class="ci-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a class="social-icon-link" href="https://x.com/KoumanaSolo" target="_blank" rel="noopener" aria-label="X (Twitter)">
+          <svg class="ci-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg>
+        </a>
+        <a class="social-icon-link" href="https://youtube.com/@solokoulibaly1876?si=EjLbb4bXqEQtFD9x" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg class="ci-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l6 3-6 3z" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="social-icon-link" href="https://www.linkedin.com/in/solo-koulibaly-04a835433?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg class="ci-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><line x1="7" y1="10" x2="7" y2="17"/><circle cx="7" cy="6.5" r="0.75" fill="currentColor" stroke="none"/><path d="M12 17v-4.5a2.5 2.5 0 015 0V17"/><line x1="12" y1="10" x2="12" y2="17"/></svg>
+        </a>
+        <!-- TODO : remplacer href="#" par le lien du profil TikTok une fois transmis -->
+        <a class="social-icon-link" href="#" aria-label="TikTok">
+          <svg class="ci-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6v9a3 3 0 11-3-3"/><path d="M9 3c.4 3.2 2.6 5.3 5.3 5.6"/></svg>
+        </a>
+      </div>
       <h2>Parlons de votre projet</h2>
     </div>
     <form class="contact-form" id="contactForm" novalidate>
@@ -1725,69 +1742,110 @@
   </div>
 </div>
 
-<!-- ============ ESPACE COLLABORATEUR — FORUM (membres connectés) ============ -->
+<!-- ============ ESPACE COLLABORATEUR — ADMINISTRATION (réservé aux admins) ============ -->
 <section class="alt collab-space" id="collabSpace" hidden>
   <div class="wrap">
     <span class="eyebrow">Espace Collaborateur</span>
-    <h2>Espace membres</h2>
+    <h2>Espace administration</h2>
     <p class="section-lede">Connecté en tant que <span class="collab-user-chip" id="collabUserChip"><span id="collabUserAvatar"></span><strong id="collabUserLabel"></strong></span>. <button type="button" class="link-btn" id="collabLogoutBtn">Se déconnecter</button></p>
 
+    <div id="collabMemberZone" hidden>
+      <div class="forum-panel" style="margin-bottom:24px;">
+        <h3 style="margin-top:0;">Annonces de l'administrateur</h3>
+        <div class="thread-list" id="memberBroadcastList">
+          <p class="forum-empty" id="memberBroadcastEmpty">Aucune annonce pour le moment.</p>
+        </div>
+      </div>
+
+      <div class="forum-panel">
+        <h3 style="margin-top:0;">Discuter avec l'administrateur</h3>
+        <div class="thread-messages" id="memberChatMessages"></div>
+        <form class="forum-reply-form" id="memberChatForm" novalidate>
+          <textarea id="memberChatText" placeholder="Écrire un message à l'administrateur..." maxlength="2000" required></textarea>
+          <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+        <span class="modal-error" id="errMemberChat">Merci d'écrire un message.</span>
+      </div>
+    </div>
+
+    <div id="collabAdminZone" hidden>
+      <div class="collab-tabs">
+        <button type="button" class="collab-tab active" id="spaceTabVisitors">Messages visiteurs <span class="chat-badge" id="visitorTabBadge" hidden>0</span></button>
+        <button type="button" class="collab-tab" id="spaceTabAdmin">Administration</button>
+        <a href="forum.html" target="_blank" rel="noopener" class="btn btn-ghost" id="openForumBtn" style="margin-left:auto; align-self:center;">Ouvrir le forum ↗ <span style="font-weight:400; font-size:.78rem;">(nouvel onglet)</span></a>
+      </div>
+
+      <div class="forum-layout" id="spacePanelVisitors">
+        <div class="forum-panel" id="visitorListPanel">
+          <div class="thread-list" id="visitorList">
+            <p class="forum-empty" id="visitorListEmpty">Aucun message de visiteur pour le moment.</p>
+          </div>
+        </div>
+
+        <div class="forum-panel" id="visitorThreadPanel" hidden>
+          <button type="button" class="link-btn" id="backToVisitors">&larr; Retour aux messages visiteurs</button>
+          <h3 id="visitorViewTitle"></h3>
+          <div class="thread-messages" id="visitorMessages"></div>
+          <form class="forum-reply-form" id="visitorReplyForm" novalidate>
+            <textarea id="visitorReplyText" placeholder="Écrire une réponse au visiteur..." maxlength="2000" required></textarea>
+            <button type="submit" class="btn btn-primary">Répondre</button>
+          </form>
+          <span class="modal-error" id="errVisitorReply">Merci d'écrire un message.</span>
+        </div>
+      </div>
+
+      <div class="forum-layout" id="spacePanelAdmin" hidden>
+        <div class="forum-panel" style="width:100%;">
+          <p class="section-lede" style="margin:0 0 10px;">Les comptes marqués <strong>Admin</strong> peuvent voir et répondre aux messages visiteurs, ouvrir le forum et gérer les autres admins. Seul un admin peut promouvoir ou révoquer un autre compte.</p>
+          <div class="thread-list" id="adminUserList">
+            <p class="forum-empty" id="adminUserListEmpty">Aucun membre inscrit pour le moment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ESPACE ADMINISTRATEUR — COMMUNICATION AVEC LES COLLABORATEURS (réservé aux admins) ============ -->
+<section class="alt collab-space" id="adminCollabSpace" hidden>
+  <div class="wrap">
+    <span class="eyebrow">Espace Administrateur</span>
+    <h2>Communication avec les collaborateurs</h2>
+    <p class="section-lede">Espace réservé à l'administrateur : discutez en direct avec chaque collaborateur connecté ou diffusez une annonce à l'ensemble des collaborateurs inscrits.</p>
+
     <div class="collab-tabs">
-      <button type="button" class="collab-tab active" id="spaceTabForum">Forum des membres</button>
-      <button type="button" class="collab-tab" id="spaceTabVisitors">Messages visiteurs <span class="chat-badge" id="visitorTabBadge" hidden>0</span></button>
-      <button type="button" class="collab-tab" id="spaceTabAdmin" hidden>Administration</button>
+      <button type="button" class="collab-tab active" id="adminTabCollabMsgs">Messages des collaborateurs <span class="chat-badge" id="collabTabBadge" hidden>0</span></button>
+      <button type="button" class="collab-tab" id="adminTabBroadcast">Diffuser une annonce</button>
     </div>
 
-    <div class="forum-layout" id="spacePanelForum">
-      <div class="forum-panel" id="forumListPanel">
-        <form class="forum-new-thread" id="newThreadForm" novalidate>
-          <input type="text" id="newThreadTitle" placeholder="Titre d'une nouvelle discussion..." maxlength="140" required>
-          <button type="submit" class="btn btn-primary">Créer</button>
-        </form>
-        <span class="modal-error" id="errNewThread">Merci d'indiquer un titre.</span>
-
-        <div class="thread-list" id="threadList">
-          <p class="forum-empty" id="threadListEmpty">Aucune discussion pour le moment. Soyez le premier à en lancer une !</p>
+    <div class="forum-layout" id="adminPanelCollabMsgs">
+      <div class="forum-panel" id="collabListPanel">
+        <div class="thread-list" id="collabChatList">
+          <p class="forum-empty" id="collabChatListEmpty">Aucun collaborateur inscrit pour le moment.</p>
         </div>
       </div>
 
-      <div class="forum-panel" id="forumThreadPanel" hidden>
-        <button type="button" class="link-btn" id="backToThreads">&larr; Retour aux discussions</button>
-        <h3 id="threadViewTitle"></h3>
-        <div class="thread-messages" id="threadMessages"></div>
-        <form class="forum-reply-form" id="replyForm" novalidate>
-          <textarea id="replyText" placeholder="Écrire une réponse..." maxlength="4000" required></textarea>
-          <button type="submit" class="btn btn-primary">Répondre</button>
+      <div class="forum-panel" id="collabThreadPanel" hidden>
+        <button type="button" class="link-btn" id="backToCollabList">&larr; Retour à la liste des collaborateurs</button>
+        <h3 id="collabThreadTitle"></h3>
+        <div class="thread-messages" id="collabThreadMessages"></div>
+        <form class="forum-reply-form" id="collabThreadReplyForm" novalidate>
+          <textarea id="collabThreadReplyText" placeholder="Écrire un message au collaborateur..." maxlength="2000" required></textarea>
+          <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
-        <span class="modal-error" id="errReply">Merci d'écrire un message.</span>
+        <span class="modal-error" id="errCollabThreadReply">Merci d'écrire un message.</span>
       </div>
     </div>
 
-    <div class="forum-layout" id="spacePanelVisitors" hidden>
-      <div class="forum-panel" id="visitorListPanel">
-        <div class="thread-list" id="visitorList">
-          <p class="forum-empty" id="visitorListEmpty">Aucun message de visiteur pour le moment.</p>
-        </div>
-      </div>
-
-      <div class="forum-panel" id="visitorThreadPanel" hidden>
-        <button type="button" class="link-btn" id="backToVisitors">&larr; Retour aux messages visiteurs</button>
-        <h3 id="visitorViewTitle"></h3>
-        <div class="thread-messages" id="visitorMessages"></div>
-        <form class="forum-reply-form" id="visitorReplyForm" novalidate>
-          <textarea id="visitorReplyText" placeholder="Écrire une réponse au visiteur..." maxlength="2000" required></textarea>
-          <button type="submit" class="btn btn-primary">Répondre</button>
-        </form>
-        <span class="modal-error" id="errVisitorReply">Merci d'écrire un message.</span>
-      </div>
-    </div>
-
-    <div class="forum-layout" id="spacePanelAdmin" hidden>
+    <div class="forum-layout" id="adminPanelBroadcast" hidden>
       <div class="forum-panel" style="width:100%;">
-        <p class="section-lede" style="margin:0 0 10px;">Les comptes marqués <strong>Admin</strong> peuvent voir et répondre aux messages visiteurs, et gérer les autres admins. Seul un admin peut promouvoir ou révoquer un autre compte.</p>
-        <div class="thread-list" id="adminUserList">
-          <p class="forum-empty" id="adminUserListEmpty">Aucun membre inscrit pour le moment.</p>
-        </div>
+        <p class="section-lede" style="margin:0 0 10px;">Ce message sera visible par tous les collaborateurs inscrits, dans leur espace membre.</p>
+        <form class="forum-reply-form" id="broadcastForm" novalidate>
+          <textarea id="broadcastText" placeholder="Écrire une annonce pour tous les collaborateurs..." maxlength="2000" required></textarea>
+          <button type="submit" class="btn btn-primary">Diffuser à tous les collaborateurs</button>
+        </form>
+        <span class="modal-error" id="errBroadcastText">Merci d'écrire un message.</span>
+        <div class="thread-list" id="broadcastHistory" style="margin-top:24px;"></div>
       </div>
     </div>
   </div>
@@ -2265,23 +2323,30 @@
   const tabLogin = document.getElementById('tabLogin');
   const tabRegister = document.getElementById('tabRegister');
   const collabNameField = document.getElementById('collabName');
+  const collabModalTitle = document.getElementById('collabModalTitle');
   const collabModalSub = document.getElementById('collabModalSub');
   const collabSubmitBtn = document.getElementById('collabSubmitBtn');
   const collabSendError = document.getElementById('collabSendError');
 
   window.collabMode = 'login';
+  window.collabModalContext = 'collab'; // 'collab' ou 'admin' : détermine le titre affiché dans la modale
 
   function resetCollabErrors() {
     collabForm.querySelectorAll('.modal-error').forEach(el => el.classList.remove('show'));
   }
 
   function setCollabTab(mode) {
+    const estAdmin = window.collabModalContext === 'admin';
+    if (estAdmin) mode = 'login'; // inscription impossible côté administrateur
     window.collabMode = mode;
     resetCollabErrors();
+    if (collabModalTitle) collabModalTitle.textContent = estAdmin ? 'Espace Administrateur' : 'Espace Collaborateur';
     if (mode === 'login') {
       tabLogin.classList.add('active'); tabRegister.classList.remove('active');
       collabNameField.hidden = true; collabNameField.required = false;
-      collabModalSub.textContent = 'Connectez-vous pour accéder au forum des membres.';
+      collabModalSub.textContent = estAdmin
+        ? 'Accès réservé.'
+        : 'Connectez-vous pour accéder au forum des membres.';
       collabSubmitBtn.textContent = 'Se connecter';
     } else {
       tabRegister.classList.add('active'); tabLogin.classList.remove('active');
@@ -2291,10 +2356,12 @@
     }
   }
   if (tabLogin) tabLogin.addEventListener('click', () => setCollabTab('login'));
-  if (tabRegister) tabRegister.addEventListener('click', () => setCollabTab('register'));
+  if (tabRegister) tabRegister.addEventListener('click', () => { if (window.collabModalContext !== 'admin') setCollabTab('register'); });
 
-  function ouvrirCollabModal() {
+  function ouvrirCollabModal(contexte) {
     if (!collabModal) return;
+    window.collabModalContext = contexte === 'admin' ? 'admin' : 'collab';
+    if (tabRegister) tabRegister.hidden = window.collabModalContext === 'admin';
     collabForm.reset();
     setCollabTab('login');
     collabModal.classList.add('open');
@@ -2315,10 +2382,27 @@
       if (window.collabUser) {
         document.getElementById('collabSpace').scrollIntoView({behavior:'smooth'});
       } else {
-        ouvrirCollabModal();
+        ouvrirCollabModal('collab');
       }
     });
   }
+  const navAdminSpaceLink = document.getElementById('navAdminSpaceLink');
+  if (navAdminSpaceLink) {
+    navAdminSpaceLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.collabUser) {
+        if (window.isAdminStaff) {
+          document.getElementById('adminCollabSpace').scrollIntoView({behavior:'smooth'});
+        } else {
+          alert("Cet espace est réservé aux administrateurs du site. Rendez-vous dans « Mon espace » pour échanger avec l'administrateur.");
+          document.getElementById('collabSpace').scrollIntoView({behavior:'smooth'});
+        }
+      } else {
+        ouvrirCollabModal('admin');
+      }
+    });
+  }
+
   if (collabModalClose) collabModalClose.addEventListener('click', fermerCollabModal);
   if (collabModal) {
     collabModal.addEventListener('click', (e) => {
@@ -2477,7 +2561,7 @@
 
 </script>
 
-<!-- ============ FIREBASE : AUTHENTIFICATION + FORUM DES MEMBRES ============ -->
+<!-- ============ FIREBASE : AUTHENTIFICATION + ESPACE ADMINISTRATION ============ -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
   import {
@@ -2485,13 +2569,12 @@
     signOut, onAuthStateChanged, updateProfile
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
   import {
-    getFirestore, collection, addDoc, query, orderBy, onSnapshot,
-    serverTimestamp, doc, deleteDoc, setDoc, updateDoc, getDoc
-  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-  import {
     getDatabase, ref, push, set, update, onValue, get,
     query as rtdbQuery, orderByChild, serverTimestamp as rtdbServerTimestamp
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+  import {
+    getFirestore, doc, setDoc, deleteDoc
+  } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDhdBcF37w7ZZBdTWVVVNaZE-MhZMtAdsU",
@@ -2506,8 +2589,8 @@
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
-  const db = getFirestore(app);       // Firestore : réservé au forum des membres
-  const rtdb = getDatabase(app);      // Realtime Database : réservé au chat visiteurs
+  const rtdb = getDatabase(app);      // Realtime Database : chat visiteurs + rôles admin
+  const db = getFirestore(app);       // Firestore : miroir des rôles admin, utilisé par les règles du forum
 
   // ---- Éléments DOM ----
   const collabForm = document.getElementById('collabForm');
@@ -2524,26 +2607,43 @@
   const collabSpace = document.getElementById('collabSpace');
   const collabUserLabel = document.getElementById('collabUserLabel');
   const collabLogoutBtn = document.getElementById('collabLogoutBtn');
+  const collabMemberZone = document.getElementById('collabMemberZone');
+  const collabAdminZone = document.getElementById('collabAdminZone');
+  const openForumBtn = document.getElementById('openForumBtn');
 
-  const forumListPanel = document.getElementById('forumListPanel');
-  const forumThreadPanel = document.getElementById('forumThreadPanel');
-  const threadList = document.getElementById('threadList');
-  const threadListEmpty = document.getElementById('threadListEmpty');
-  const newThreadForm = document.getElementById('newThreadForm');
-  const newThreadTitle = document.getElementById('newThreadTitle');
-  const errNewThread = document.getElementById('errNewThread');
-  const backToThreads = document.getElementById('backToThreads');
-  const threadViewTitle = document.getElementById('threadViewTitle');
-  const threadMessages = document.getElementById('threadMessages');
-  const replyForm = document.getElementById('replyForm');
-  const replyText = document.getElementById('replyText');
-  const errReply = document.getElementById('errReply');
+  // ---- Espace Administrateur : communication avec les collaborateurs connectés ----
+  const adminCollabSpace = document.getElementById('adminCollabSpace');
+  const adminTabCollabMsgs = document.getElementById('adminTabCollabMsgs');
+  const adminTabBroadcast = document.getElementById('adminTabBroadcast');
+  const adminPanelCollabMsgs = document.getElementById('adminPanelCollabMsgs');
+  const adminPanelBroadcast = document.getElementById('adminPanelBroadcast');
+  const collabTabBadge = document.getElementById('collabTabBadge');
+  const collabChatList = document.getElementById('collabChatList');
+  const collabChatListEmpty = document.getElementById('collabChatListEmpty');
+  const collabListPanel = document.getElementById('collabListPanel');
+  const collabThreadPanel = document.getElementById('collabThreadPanel');
+  const collabThreadTitle = document.getElementById('collabThreadTitle');
+  const collabThreadMessages = document.getElementById('collabThreadMessages');
+  const backToCollabList = document.getElementById('backToCollabList');
+  const collabThreadReplyForm = document.getElementById('collabThreadReplyForm');
+  const collabThreadReplyText = document.getElementById('collabThreadReplyText');
+  const errCollabThreadReply = document.getElementById('errCollabThreadReply');
+  const broadcastForm = document.getElementById('broadcastForm');
+  const broadcastText = document.getElementById('broadcastText');
+  const errBroadcastText = document.getElementById('errBroadcastText');
+  const broadcastHistory = document.getElementById('broadcastHistory');
 
-  // ---- Onglets Espace membres ----
-  const spaceTabForum = document.getElementById('spaceTabForum');
+  // ---- Espace membre (collaborateur non-admin) : annonces + discussion avec l'administrateur ----
+  const memberBroadcastList = document.getElementById('memberBroadcastList');
+  const memberBroadcastEmpty = document.getElementById('memberBroadcastEmpty');
+  const memberChatMessages = document.getElementById('memberChatMessages');
+  const memberChatForm = document.getElementById('memberChatForm');
+  const memberChatText = document.getElementById('memberChatText');
+  const errMemberChat = document.getElementById('errMemberChat');
+
+  // ---- Onglets Espace administration ----
   const spaceTabVisitors = document.getElementById('spaceTabVisitors');
   const spaceTabAdmin = document.getElementById('spaceTabAdmin');
-  const spacePanelForum = document.getElementById('spacePanelForum');
   const spacePanelVisitors = document.getElementById('spacePanelVisitors');
   const spacePanelAdmin = document.getElementById('spacePanelAdmin');
   const visitorTabBadge = document.getElementById('visitorTabBadge');
@@ -2576,14 +2676,19 @@
   const chatInputForm = document.getElementById('chatInputForm');
   const chatInputText = document.getElementById('chatInputText');
 
-  let unsubThreads = null;
-  let unsubMessages = null;
   let unsubVisitorList = null;
   let unsubVisitorMessages = null;
   let unsubAdminUsers = null;
   let unsubAdminAdmins = null;
   let currentVisitorId = null;
-  let currentThreadId = null;
+
+  let unsubCollabUsers = null;
+  let unsubCollabChatsList = null;
+  let unsubCollabThreadMessages = null;
+  let unsubBroadcastsAdmin = null;
+  let unsubMemberChat = null;
+  let unsubMemberBroadcasts = null;
+  let currentCollabThreadUid = null;
 
   function displayNameFor(user) {
     return user.displayName || user.email;
@@ -2702,7 +2807,6 @@
         collabUserAvatar.appendChild(avatarHTML(displayNameFor(user), user.uid));
       }
       if (navCollabLink) navCollabLink.textContent = 'Mon espace';
-      demarrerEcouteFils();
 
       // Tient à jour l'annuaire des membres (utile pour l'espace Administration)
       update(ref(rtdb, 'users/' + user.uid), {
@@ -2718,229 +2822,89 @@
         window.isAdminStaff = false;
       }
 
-      if (spaceTabVisitors) spaceTabVisitors.hidden = !window.isAdminStaff;
-      if (spaceTabAdmin) spaceTabAdmin.hidden = !window.isAdminStaff;
       if (window.isAdminStaff) {
+        // Admin : accès complet à l'espace administration (messages visiteurs + gestion des admins + lien vers le forum)
+        // + Espace Administrateur dédié : communication directe avec les collaborateurs connectés
+        if (collabMemberZone) collabMemberZone.hidden = true;
+        if (collabAdminZone) collabAdminZone.hidden = false;
+        if (adminCollabSpace) adminCollabSpace.hidden = false;
+        spaceTabVisitors.classList.add('active');
+        spaceTabAdmin.classList.remove('active');
+        spacePanelVisitors.hidden = false;
+        spacePanelAdmin.hidden = true;
         demarrerEcouteVisiteurs();
         demarrerEcouteAdmin();
-      } else if (spaceTabForum) {
-        // Utilisateur non-admin : on s'assure que l'onglet Forum reste affiché
-        spaceTabForum.classList.add('active');
-        if (spaceTabVisitors) spaceTabVisitors.classList.remove('active');
-        if (spaceTabAdmin) spaceTabAdmin.classList.remove('active');
-        spacePanelForum.hidden = false;
-        spacePanelVisitors.hidden = true;
-        if (spacePanelAdmin) spacePanelAdmin.hidden = true;
+        demarrerEcouteCollabChats();
+        demarrerEcouteBroadcastsAdmin();
+        if (unsubMemberChat) { unsubMemberChat(); unsubMemberChat = null; }
+        if (unsubMemberBroadcasts) { unsubMemberBroadcasts(); unsubMemberBroadcasts = null; }
+      } else {
+        // Membre non-admin : ni forum, ni messages visiteurs, ni espace administrateur —
+        // mais accès à ses propres annonces + à sa discussion directe avec l'administrateur
+        if (collabAdminZone) collabAdminZone.hidden = true;
+        if (adminCollabSpace) adminCollabSpace.hidden = true;
+        if (collabMemberZone) collabMemberZone.hidden = false;
+        demarrerEcouteMemberChat(user);
+        demarrerEcouteMemberBroadcasts();
+        if (unsubCollabUsers) { unsubCollabUsers(); unsubCollabUsers = null; }
+        if (unsubCollabChatsList) { unsubCollabChatsList(); unsubCollabChatsList = null; }
+        if (unsubCollabThreadMessages) { unsubCollabThreadMessages(); unsubCollabThreadMessages = null; }
+        if (unsubBroadcastsAdmin) { unsubBroadcastsAdmin(); unsubBroadcastsAdmin = null; }
       }
     } else {
       collabSpace.hidden = true;
       if (navCollabLink) navCollabLink.textContent = 'Espace Collaborateur';
-      if (spaceTabVisitors) spaceTabVisitors.hidden = true;
-      if (spaceTabAdmin) spaceTabAdmin.hidden = true;
-      if (unsubThreads) { unsubThreads(); unsubThreads = null; }
-      if (unsubMessages) { unsubMessages(); unsubMessages = null; }
+      if (collabMemberZone) collabMemberZone.hidden = true;
+      if (collabAdminZone) collabAdminZone.hidden = true;
+      if (adminCollabSpace) adminCollabSpace.hidden = true;
       if (unsubVisitorList) { unsubVisitorList(); unsubVisitorList = null; }
       if (unsubVisitorMessages) { unsubVisitorMessages(); unsubVisitorMessages = null; }
       if (unsubAdminUsers) { unsubAdminUsers(); unsubAdminUsers = null; }
       if (unsubAdminAdmins) { unsubAdminAdmins(); unsubAdminAdmins = null; }
-      afficherListeFils();
+      if (unsubCollabUsers) { unsubCollabUsers(); unsubCollabUsers = null; }
+      if (unsubCollabChatsList) { unsubCollabChatsList(); unsubCollabChatsList = null; }
+      if (unsubCollabThreadMessages) { unsubCollabThreadMessages(); unsubCollabThreadMessages = null; }
+      if (unsubBroadcastsAdmin) { unsubBroadcastsAdmin(); unsubBroadcastsAdmin = null; }
+      if (unsubMemberChat) { unsubMemberChat(); unsubMemberChat = null; }
+      if (unsubMemberBroadcasts) { unsubMemberBroadcasts(); unsubMemberBroadcasts = null; }
       afficherListeVisiteurs();
+      afficherListeCollab();
     }
   });
 
-  // ---- Onglets Espace membres ----
-  if (spaceTabForum && spaceTabVisitors) {
-    spaceTabForum.addEventListener('click', () => {
-      spaceTabForum.classList.add('active');
-      spaceTabVisitors.classList.remove('active');
-      if (spaceTabAdmin) spaceTabAdmin.classList.remove('active');
-      spacePanelForum.hidden = false;
-      spacePanelVisitors.hidden = true;
-      if (spacePanelAdmin) spacePanelAdmin.hidden = true;
-    });
+  // ---- Onglets Espace administration ----
+  if (spaceTabVisitors && spaceTabAdmin) {
     spaceTabVisitors.addEventListener('click', () => {
       if (!window.isAdminStaff) return; // sécurité côté client, en plus des règles Realtime Database
       spaceTabVisitors.classList.add('active');
-      spaceTabForum.classList.remove('active');
-      if (spaceTabAdmin) spaceTabAdmin.classList.remove('active');
+      spaceTabAdmin.classList.remove('active');
       spacePanelVisitors.hidden = false;
-      spacePanelForum.hidden = true;
-      if (spacePanelAdmin) spacePanelAdmin.hidden = true;
+      spacePanelAdmin.hidden = true;
     });
-  }
-  if (spaceTabAdmin) {
     spaceTabAdmin.addEventListener('click', () => {
       if (!window.isAdminStaff) return; // sécurité côté client, en plus des règles Realtime Database
       spaceTabAdmin.classList.add('active');
-      spaceTabForum.classList.remove('active');
       spaceTabVisitors.classList.remove('active');
       spacePanelAdmin.hidden = false;
-      spacePanelForum.hidden = true;
       spacePanelVisitors.hidden = true;
     });
   }
 
-  // ---- Liste des discussions (temps réel) ----
-  let premierChargementFils = true;
-  function demarrerEcouteFils() {
-    if (unsubThreads) unsubThreads();
-    premierChargementFils = true;
-    const q = query(collection(db, 'threads'), orderBy('createdAt', 'desc'));
-    unsubThreads = onSnapshot(q, (snap) => {
-      threadList.innerHTML = '';
-      if (snap.empty) {
-        threadListEmpty.style.display = 'block';
-      } else {
-        threadListEmpty.style.display = 'none';
-        snap.forEach((docSnap) => {
-          const t = docSnap.data();
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'thread-item';
-          const date = t.createdAt ? t.createdAt.toDate().toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric'}) : '';
-          const auteur = t.authorName || t.authorEmail || 'membre';
-          btn.appendChild(avatarHTML(auteur, t.authorUid));
-          const infos = document.createElement('span');
-          infos.innerHTML = `<span class="t-title"></span><br><span class="t-meta"></span>`;
-          infos.querySelector('.t-title').textContent = t.title || '(sans titre)';
-          infos.querySelector('.t-meta').textContent = 'Par ' + auteur + (date ? ' · ' + date : '');
-          btn.appendChild(infos);
-          const arrow = document.createElement('span');
-          arrow.className = 't-arrow';
-          arrow.innerHTML = '&rarr;';
-          btn.appendChild(arrow);
-          btn.addEventListener('click', () => ouvrirFil(docSnap.id, t.title));
-          threadList.appendChild(btn);
-        });
-      }
-
-      // Notification : nouvelle discussion créée par un autre membre
-      if (!premierChargementFils) {
-        snap.docChanges().forEach((change) => {
-          if (change.type === 'added') {
-            const t = change.doc.data();
-            if (window.collabUser && t.authorUid !== window.collabUser.uid) {
-              notifier('Nouvelle discussion', (t.authorName || t.authorEmail || 'Un membre') + ' a lancé « ' + (t.title || 'sans titre') + ' »');
-            }
-          }
-        });
-      }
-      premierChargementFils = false;
+  // ---- Onglets Espace Administrateur (communication collaborateurs) ----
+  if (adminTabCollabMsgs && adminTabBroadcast) {
+    adminTabCollabMsgs.addEventListener('click', () => {
+      if (!window.isAdminStaff) return;
+      adminTabCollabMsgs.classList.add('active');
+      adminTabBroadcast.classList.remove('active');
+      adminPanelCollabMsgs.hidden = false;
+      adminPanelBroadcast.hidden = true;
     });
-  }
-
-  if (newThreadForm) {
-    newThreadForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const title = newThreadTitle.value.trim();
-      errNewThread.classList.toggle('show', title.length === 0);
-      if (!title || !window.collabUser) return;
-      await addDoc(collection(db, 'threads'), {
-        title,
-        authorUid: window.collabUser.uid,
-        authorEmail: window.collabUser.email,
-        authorName: displayNameFor(window.collabUser),
-        createdAt: serverTimestamp()
-      });
-      newThreadForm.reset();
-      errNewThread.classList.remove('show');
-    });
-  }
-
-  // ---- Vue d'un fil de discussion ----
-  function afficherListeFils() {
-    forumListPanel.hidden = false;
-    forumThreadPanel.hidden = true;
-    currentThreadId = null;
-    if (unsubMessages) { unsubMessages(); unsubMessages = null; }
-  }
-
-  function ouvrirFil(threadId, title) {
-    currentThreadId = threadId;
-    threadViewTitle.textContent = title || '(sans titre)';
-    forumListPanel.hidden = true;
-    forumThreadPanel.hidden = false;
-    threadMessages.innerHTML = '';
-
-    if (unsubMessages) unsubMessages();
-    let premierChargementMessages = true;
-    const msgsRef = collection(db, 'threads', threadId, 'messages');
-    const q = query(msgsRef, orderBy('createdAt', 'asc'));
-    unsubMessages = onSnapshot(q, (snap) => {
-      threadMessages.innerHTML = '';
-      snap.forEach((docSnap) => {
-        const m = docSnap.data();
-        const estAuteur = window.collabUser && m.authorUid === window.collabUser.uid;
-        const auteur = m.authorName || m.authorEmail || 'membre';
-        const el = document.createElement('div');
-        el.className = 'thread-msg' + (estAuteur ? ' own' : '');
-
-        const time = m.createdAt ? m.createdAt.toDate().toLocaleString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
-
-        el.appendChild(avatarHTML(auteur, m.authorUid));
-
-        const body = document.createElement('div');
-        body.className = 'msg-body';
-        body.innerHTML = `<div class="msg-head"><div class="m-author"></div></div><div class="m-text"></div><div class="m-time"></div>`;
-        body.querySelector('.m-author').textContent = auteur;
-        body.querySelector('.m-text').textContent = m.text || '';
-        body.querySelector('.m-time').textContent = time;
-
-        if (estAuteur) {
-          const delBtn = document.createElement('button');
-          delBtn.type = 'button';
-          delBtn.className = 'msg-delete-btn';
-          delBtn.textContent = 'Supprimer';
-          delBtn.addEventListener('click', async () => {
-            if (!confirm('Supprimer définitivement ce message ?')) return;
-            delBtn.disabled = true;
-            try {
-              await deleteDoc(doc(db, 'threads', threadId, 'messages', docSnap.id));
-            } catch (err) {
-              delBtn.disabled = false;
-              notifier('Erreur', "Impossible de supprimer ce message pour le moment.");
-            }
-          });
-          body.querySelector('.msg-head').appendChild(delBtn);
-        }
-
-        el.appendChild(body);
-        threadMessages.appendChild(el);
-      });
-      threadMessages.scrollTop = threadMessages.scrollHeight;
-
-      // Notification : nouveau message d'un autre membre dans le fil ouvert
-      if (!premierChargementMessages) {
-        snap.docChanges().forEach((change) => {
-          if (change.type === 'added') {
-            const m = change.doc.data();
-            if (window.collabUser && m.authorUid !== window.collabUser.uid) {
-              notifier('Nouveau message', (m.authorName || m.authorEmail || 'Un membre') + ' : ' + (m.text || '').slice(0, 80));
-            }
-          }
-        });
-      }
-      premierChargementMessages = false;
-    });
-  }
-
-  if (backToThreads) backToThreads.addEventListener('click', afficherListeFils);
-
-  if (replyForm) {
-    replyForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const text = replyText.value.trim();
-      errReply.classList.toggle('show', text.length === 0);
-      if (!text || !currentThreadId || !window.collabUser) return;
-      await addDoc(collection(db, 'threads', currentThreadId, 'messages'), {
-        text,
-        authorUid: window.collabUser.uid,
-        authorEmail: window.collabUser.email,
-        authorName: displayNameFor(window.collabUser),
-        createdAt: serverTimestamp()
-      });
-      replyText.value = '';
-      errReply.classList.remove('show');
+    adminTabBroadcast.addEventListener('click', () => {
+      if (!window.isAdminStaff) return;
+      adminTabBroadcast.classList.add('active');
+      adminTabCollabMsgs.classList.remove('active');
+      adminPanelBroadcast.hidden = false;
+      adminPanelCollabMsgs.hidden = true;
     });
   }
 
@@ -3072,7 +3036,8 @@
         lastMessage: text,
         lastAt: rtdbServerTimestamp(),
         unreadForVisitor: true,
-        unreadForStaff: false
+        unreadForStaff: false,
+        botActif: false
       });
       visitorReplyText.value = '';
       errVisitorReply.classList.remove('show');
@@ -3147,6 +3112,12 @@
     }
     try {
       await set(ref(rtdb, 'admins/' + uid), estActuellementAdmin ? null : true);
+      // Miroir dans Firestore : utilisé par les règles de sécurité du forum (Firestore ne peut pas lire la Realtime Database)
+      if (estActuellementAdmin) {
+        await deleteDoc(doc(db, 'admins', uid)).catch(() => {});
+      } else {
+        await setDoc(doc(db, 'admins', uid), { isAdmin: true }).catch(() => {});
+      }
     } catch (err) {
       notifier('Erreur', "Impossible de modifier ce rôle. Réessayez.");
     }
@@ -3164,6 +3135,358 @@
       adminFlagsCache = snap.val() || {};
       renderAdminList();
     });
+  }
+
+  // ==================== ESPACE ADMINISTRATEUR : LISTE DES COLLABORATEURS + FIL DE DISCUSSION (staff) ====================
+  let collabUsersCache = {};
+  let collabChatsCache = {};
+
+  function renderCollabList() {
+    if (!collabChatList) return;
+    collabChatList.innerHTML = '';
+    const uids = Object.keys(collabUsersCache).filter(uid => !window.collabUser || uid !== window.collabUser.uid);
+
+    if (uids.length === 0) {
+      collabChatList.appendChild(collabChatListEmpty);
+      collabChatListEmpty.style.display = 'block';
+      if (collabTabBadge) collabTabBadge.hidden = true;
+      return;
+    }
+    collabChatListEmpty.style.display = 'none';
+
+    let unreadCount = 0;
+    uids.sort((a, b) => {
+      const la = (collabChatsCache[a] || {}).lastAt || 0;
+      const lb = (collabChatsCache[b] || {}).lastAt || 0;
+      if (la !== lb) return lb - la;
+      return (collabUsersCache[a].name || '').localeCompare(collabUsersCache[b].name || '');
+    });
+
+    uids.forEach((uid) => {
+      const u = collabUsersCache[uid] || {};
+      const c = collabChatsCache[uid] || {};
+      if (c.unreadForStaff) unreadCount++;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'visitor-item';
+      btn.appendChild(avatarHTML(u.name || u.email || 'Collaborateur', uid));
+
+      const infos = document.createElement('span');
+      const nameLine = document.createElement('span');
+      nameLine.className = 'v-name';
+      nameLine.textContent = u.name || u.email || 'Collaborateur';
+      if (c.unreadForStaff) {
+        const dot = document.createElement('span');
+        dot.className = 'visitor-unread-dot';
+        nameLine.appendChild(dot);
+      }
+      const preview = document.createElement('span');
+      preview.className = 'v-preview';
+      preview.textContent = c.lastMessage || u.email || '';
+      infos.appendChild(nameLine);
+      infos.appendChild(document.createElement('br'));
+      infos.appendChild(preview);
+      btn.appendChild(infos);
+
+      btn.addEventListener('click', () => ouvrirConversationCollab(uid, u.name || u.email));
+      collabChatList.appendChild(btn);
+    });
+
+    if (collabTabBadge) {
+      collabTabBadge.hidden = unreadCount === 0;
+      collabTabBadge.textContent = String(unreadCount);
+    }
+  }
+
+  function demarrerEcouteCollabChats() {
+    if (unsubCollabUsers) unsubCollabUsers();
+    if (unsubCollabChatsList) unsubCollabChatsList();
+    unsubCollabUsers = onValue(ref(rtdb, 'users'), (snap) => {
+      collabUsersCache = snap.val() || {};
+      renderCollabList();
+    });
+    unsubCollabChatsList = onValue(ref(rtdb, 'collabChats'), (snap) => {
+      collabChatsCache = snap.val() || {};
+      renderCollabList();
+    });
+  }
+
+  function afficherListeCollab() {
+    if (!collabListPanel) return;
+    collabListPanel.hidden = false;
+    collabThreadPanel.hidden = true;
+    currentCollabThreadUid = null;
+    if (unsubCollabThreadMessages) { unsubCollabThreadMessages(); unsubCollabThreadMessages = null; }
+  }
+
+  function ouvrirConversationCollab(uid, name) {
+    currentCollabThreadUid = uid;
+    collabThreadTitle.textContent = name || 'Collaborateur';
+    collabListPanel.hidden = true;
+    collabThreadPanel.hidden = false;
+    collabThreadMessages.innerHTML = '';
+
+    update(ref(rtdb, 'collabChats/' + uid), { unreadForStaff: false }).catch(() => {});
+
+    if (unsubCollabThreadMessages) unsubCollabThreadMessages();
+    const messagesRef = rtdbQuery(ref(rtdb, 'collabChats/' + uid + '/messages'), orderByChild('createdAt'));
+    unsubCollabThreadMessages = onValue(messagesRef, (snap) => {
+      collabThreadMessages.innerHTML = '';
+      snap.forEach((childSnap) => {
+        const m = childSnap.val() || {};
+        const estStaff = m.sender === 'staff';
+        const el = document.createElement('div');
+        el.className = 'thread-msg' + (estStaff ? ' own' : '');
+        const time = m.createdAt ? new Date(m.createdAt).toLocaleString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
+
+        el.appendChild(avatarHTML(m.authorName || (estStaff ? 'Administrateur' : 'Collaborateur'), estStaff ? (m.authorUid || 'staff') : uid));
+
+        const body = document.createElement('div');
+        body.className = 'msg-body';
+        body.innerHTML = `<div class="msg-head"><div class="m-author"></div></div><div class="m-text"></div><div class="m-time"></div>`;
+        body.querySelector('.m-author').textContent = m.authorName || (estStaff ? 'Administrateur' : 'Collaborateur');
+        body.querySelector('.m-text').textContent = m.text || '';
+        body.querySelector('.m-time').textContent = time;
+
+        el.appendChild(body);
+        collabThreadMessages.appendChild(el);
+      });
+      collabThreadMessages.scrollTop = collabThreadMessages.scrollHeight;
+    });
+  }
+
+  if (backToCollabList) backToCollabList.addEventListener('click', afficherListeCollab);
+
+  if (collabThreadReplyForm) {
+    collabThreadReplyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = collabThreadReplyText.value.trim();
+      errCollabThreadReply.classList.toggle('show', text.length === 0);
+      if (!text || !currentCollabThreadUid || !window.collabUser || !window.isAdminStaff) return;
+      await push(ref(rtdb, 'collabChats/' + currentCollabThreadUid + '/messages'), {
+        text,
+        sender: 'staff',
+        authorUid: window.collabUser.uid,
+        authorName: displayNameFor(window.collabUser),
+        createdAt: rtdbServerTimestamp()
+      });
+      await update(ref(rtdb, 'collabChats/' + currentCollabThreadUid), {
+        lastMessage: text,
+        lastAt: rtdbServerTimestamp(),
+        unreadForCollab: true,
+        unreadForStaff: false
+      });
+      collabThreadReplyText.value = '';
+      errCollabThreadReply.classList.remove('show');
+    });
+  }
+
+  // ==================== ESPACE ADMINISTRATEUR : DIFFUSION D'ANNONCES (staff) ====================
+  function renderBroadcastHistory(cache) {
+    if (!broadcastHistory) return;
+    broadcastHistory.innerHTML = '';
+    const ids = Object.keys(cache);
+    if (ids.length === 0) return;
+    ids.sort((a, b) => (cache[b].createdAt || 0) - (cache[a].createdAt || 0));
+    ids.forEach((id) => {
+      const b = cache[id] || {};
+      const time = b.createdAt ? new Date(b.createdAt).toLocaleString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
+      const item = document.createElement('div');
+      item.className = 'thread-msg';
+      item.style.marginBottom = '10px';
+      item.innerHTML = `<div class="msg-body"><div class="m-text"></div><div class="m-time"></div></div>`;
+      item.querySelector('.m-text').textContent = b.text || '';
+      item.querySelector('.m-time').textContent = (b.authorName || 'Administrateur') + ' · ' + time;
+      broadcastHistory.appendChild(item);
+    });
+  }
+
+  function demarrerEcouteBroadcastsAdmin() {
+    if (unsubBroadcastsAdmin) unsubBroadcastsAdmin();
+    unsubBroadcastsAdmin = onValue(ref(rtdb, 'broadcasts'), (snap) => {
+      renderBroadcastHistory(snap.val() || {});
+    });
+  }
+
+  if (broadcastForm) {
+    broadcastForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = broadcastText.value.trim();
+      errBroadcastText.classList.toggle('show', text.length === 0);
+      if (!text || !window.collabUser || !window.isAdminStaff) return;
+      await push(ref(rtdb, 'broadcasts'), {
+        text,
+        authorUid: window.collabUser.uid,
+        authorName: displayNameFor(window.collabUser),
+        createdAt: rtdbServerTimestamp()
+      });
+      broadcastText.value = '';
+      errBroadcastText.classList.remove('show');
+      notifier('Annonce diffusée', 'Votre message est visible par tous les collaborateurs.');
+    });
+  }
+
+  // ==================== ESPACE MEMBRE (collaborateur non-admin) : discussion + annonces ====================
+  function demarrerEcouteMemberChat(user) {
+    if (unsubMemberChat) unsubMemberChat();
+
+    update(ref(rtdb, 'collabChats/' + user.uid), {
+      name: displayNameFor(user),
+      email: user.email
+    }).catch(() => {});
+    update(ref(rtdb, 'collabChats/' + user.uid), { unreadForCollab: false }).catch(() => {});
+
+    const messagesRef = rtdbQuery(ref(rtdb, 'collabChats/' + user.uid + '/messages'), orderByChild('createdAt'));
+    unsubMemberChat = onValue(messagesRef, (snap) => {
+      if (!memberChatMessages) return;
+      memberChatMessages.innerHTML = '';
+      snap.forEach((childSnap) => {
+        const m = childSnap.val() || {};
+        const estMoi = m.sender === 'collab';
+        const el = document.createElement('div');
+        el.className = 'thread-msg' + (estMoi ? ' own' : '');
+        const time = m.createdAt ? new Date(m.createdAt).toLocaleString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
+
+        el.appendChild(avatarHTML(m.authorName || (estMoi ? displayNameFor(user) : 'Administrateur'), estMoi ? user.uid : 'staff'));
+
+        const body = document.createElement('div');
+        body.className = 'msg-body';
+        body.innerHTML = `<div class="msg-head"><div class="m-author"></div></div><div class="m-text"></div><div class="m-time"></div>`;
+        body.querySelector('.m-author').textContent = m.authorName || (estMoi ? displayNameFor(user) : 'Administrateur');
+        body.querySelector('.m-text').textContent = m.text || '';
+        body.querySelector('.m-time').textContent = time;
+
+        el.appendChild(body);
+        memberChatMessages.appendChild(el);
+      });
+      memberChatMessages.scrollTop = memberChatMessages.scrollHeight;
+    });
+  }
+
+  if (memberChatForm) {
+    memberChatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = memberChatText.value.trim();
+      errMemberChat.classList.toggle('show', text.length === 0);
+      if (!text || !window.collabUser) return;
+      const user = window.collabUser;
+      await push(ref(rtdb, 'collabChats/' + user.uid + '/messages'), {
+        text,
+        sender: 'collab',
+        authorName: displayNameFor(user),
+        createdAt: rtdbServerTimestamp()
+      });
+      await update(ref(rtdb, 'collabChats/' + user.uid), {
+        name: displayNameFor(user),
+        email: user.email,
+        lastMessage: text,
+        lastAt: rtdbServerTimestamp(),
+        unreadForStaff: true,
+        unreadForCollab: false
+      });
+      memberChatText.value = '';
+      errMemberChat.classList.remove('show');
+    });
+  }
+
+  function demarrerEcouteMemberBroadcasts() {
+    if (unsubMemberBroadcasts) unsubMemberBroadcasts();
+    unsubMemberBroadcasts = onValue(ref(rtdb, 'broadcasts'), (snap) => {
+      if (!memberBroadcastList) return;
+      const cache = snap.val() || {};
+      memberBroadcastList.innerHTML = '';
+      const ids = Object.keys(cache);
+      if (ids.length === 0) {
+        memberBroadcastList.appendChild(memberBroadcastEmpty);
+        memberBroadcastEmpty.style.display = 'block';
+        return;
+      }
+      memberBroadcastEmpty.style.display = 'none';
+      ids.sort((a, b) => (cache[b].createdAt || 0) - (cache[a].createdAt || 0));
+      ids.forEach((id) => {
+        const b = cache[id] || {};
+        const time = b.createdAt ? new Date(b.createdAt).toLocaleString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
+        const item = document.createElement('div');
+        item.className = 'thread-msg';
+        item.style.marginBottom = '10px';
+        item.innerHTML = `<div class="msg-body"><div class="m-text"></div><div class="m-time"></div></div>`;
+        item.querySelector('.m-text').textContent = b.text || '';
+        item.querySelector('.m-time').textContent = (b.authorName || 'Administrateur') + ' · ' + time;
+        memberBroadcastList.appendChild(item);
+      });
+    });
+  }
+
+  // ==================== ASSISTANT AUTOMATIQUE DU CHAT (réponses par mots-clés, basées sur le contenu du site) ====================
+  function normaliserTexte(txt) {
+    return (txt || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // retire les accents
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  const MOTS_VIDES = new Set(['le','la','les','un','une','des','de','du','ce','cet','cette','ces','et','ou','a','au','aux','en','pour','par','sur','avec','dans','est','sont','vous','je','tu','il','elle','on','que','qui','quoi','comment','combien','faites','fait','faire','votre','vos','mon','ma','mes','si','se','sa','son','ses','y','plus','bien','tres','svp','merci','bonjour','salut','pouvez','pouvez-vous']);
+
+  function motsCles(txt) {
+    return normaliserTexte(txt).split(' ').filter(m => m.length > 2 && !MOTS_VIDES.has(m));
+  }
+
+  // Construit la base de connaissance à partir du contenu réel du site (FAQ + services + contact),
+  // afin que le bot reste à jour automatiquement si le contenu du site change.
+  function construireBaseConnaissance() {
+    const base = [];
+
+    document.querySelectorAll('#faqList .faq-item').forEach(item => {
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a p');
+      if (!q || !a) return;
+      const question = q.childNodes[0] ? q.childNodes[0].textContent.trim() : q.textContent.trim();
+      const reponse = a.textContent.trim();
+      base.push({ motsCles: motsCles(question + ' ' + reponse), reponse });
+    });
+
+    document.querySelectorAll('.service-card').forEach(card => {
+      const titre = card.querySelector('h3');
+      const desc = card.querySelector('p');
+      if (!titre) return;
+      const reponse = titre.textContent.trim() + (desc ? ' — ' + desc.textContent.trim() : '') + ' Écrivez-moi via ce chat ou WhatsApp (+224 621 10 98 47) pour un devis.';
+      base.push({ motsCles: motsCles(titre.textContent + ' ' + (desc ? desc.textContent : '')), reponse });
+    });
+
+    // Quelques entrées de secours utiles même si absentes du HTML détecté ci-dessus
+    base.push({ motsCles: motsCles('whatsapp telephone numero contacter joindre'), reponse: "Vous pouvez me joindre directement sur WhatsApp au +224 621 10 98 47, ou via le formulaire de contact du site." });
+    base.push({ motsCles: motsCles('prix tarif cout combien coute devis'), reponse: "Les tarifs dépendent du besoin (formation, coaching, création graphique...). Décrivez votre projet ici ou par WhatsApp et je vous envoie un devis sous 24 à 48h." });
+    base.push({ motsCles: motsCles('horaire disponibilite ouvert quand'), reponse: "Je réponds généralement sous 24 à 48h aux demandes reçues via le chat, le formulaire ou WhatsApp." });
+
+    return base;
+  }
+
+  let baseConnaissance = null;
+  const REPONSE_SALUTATION = "Bonjour et bienvenue ! Je suis l'assistant automatique du site. Posez votre question (formations, coaching, livre, CV, tarifs...) et je vous réponds tout de suite avec les informations du site. Un membre de l'équipe pourra aussi prendre le relais.";
+  const REPONSE_INCONNUE = "Je n'ai pas d'information précise à ce sujet dans le contenu du site pour le moment. Un membre de l'équipe va vous répondre personnellement dès que possible. Vous pouvez aussi consulter la section FAQ ou écrire sur WhatsApp au +224 621 10 98 47.";
+
+  function trouverReponseAuto(messageVisiteur) {
+    if (!baseConnaissance) baseConnaissance = construireBaseConnaissance();
+    const motsMsg = motsCles(messageVisiteur);
+    if (motsMsg.length === 0) return REPONSE_SALUTATION;
+
+    const normMsg = normaliserTexte(messageVisiteur);
+    if (/^(bonjour|salut|bonsoir|hello|coucou|bjr)\b/.test(normMsg) && motsMsg.length <= 2) {
+      return REPONSE_SALUTATION;
+    }
+
+    let meilleur = null;
+    let meilleurScore = 0;
+    baseConnaissance.forEach(entree => {
+      let score = 0;
+      motsMsg.forEach(mot => { if (entree.motsCles.includes(mot)) score++; });
+      if (score > meilleurScore) { meilleurScore = score; meilleur = entree; }
+    });
+
+    return meilleurScore > 0 ? meilleur.reponse : REPONSE_INCONNUE;
   }
 
   // ==================== CHAT EN DIRECT (bulle flottante, côté visiteur) — Realtime Database ====================
@@ -3193,6 +3516,8 @@
       return ts ? new Date(ts).toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}) : '';
     }
 
+    let botActifCourant = true; // le bot répond tant qu'aucun humain (admin) n'a pris le relais sur cette conversation
+
     function demarrerEcouteChatVisiteur() {
       if (chatListening) return;
       chatListening = true;
@@ -3200,6 +3525,7 @@
       onValue(ref(rtdb, 'liveChats/' + visitorId), (snap) => {
         if (!snap.exists()) return;
         const d = snap.val() || {};
+        botActifCourant = d.botActif !== false;
         if (d.unreadForVisitor && !chatWindow.classList.contains('open')) {
           chatBadge.hidden = false;
           chatBadge.textContent = '1';
@@ -3295,6 +3621,25 @@
           lastAt: rtdbServerTimestamp(),
           unreadForStaff: true
         });
+
+        if (botActifCourant) {
+          const reponseBot = trouverReponseAuto(texte);
+          setTimeout(async () => {
+            try {
+              await push(ref(rtdb, 'liveChats/' + visitorId + '/messages'), {
+                text: reponseBot,
+                sender: 'staff',
+                authorName: 'Assistant automatique',
+                createdAt: rtdbServerTimestamp()
+              });
+              await update(ref(rtdb, 'liveChats/' + visitorId), {
+                lastMessage: reponseBot,
+                lastAt: rtdbServerTimestamp(),
+                unreadForVisitor: true
+              });
+            } catch (err) { /* silencieux : le visiteur garde son message envoyé */ }
+          }, 700);
+        }
       } catch (err) {
         notifier('Erreur', "Le message n'a pas pu être envoyé. Réessayez.");
       }
