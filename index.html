@@ -582,7 +582,7 @@
     font-family:'Work Sans',sans-serif; font-size:.92rem; color:var(--charcoal);
   }
   .chat-messages{flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; background:var(--paper);}
-  .chat-msg{max-width:82%; padding:9px 12px; border-radius:12px; font-size:.88rem; line-height:1.45; background:var(--white); align-self:flex-start; box-shadow:0 2px 6px rgba(27,42,74,0.06);}
+  .chat-msg{max-width:82%; padding:9px 12px; border-radius:12px; font-size:.88rem; line-height:1.45; background:var(--white); align-self:flex-start; box-shadow:0 2px 6px rgba(27,42,74,0.06); white-space:pre-wrap; word-break:break-word;}
   .chat-msg .cm-meta{font-family:'JetBrains Mono',monospace; font-size:.65rem; color:#a39c8f; margin-top:4px;}
   .chat-msg.mine{align-self:flex-end; background:var(--clay); color:var(--white);}
   .chat-msg.mine .cm-meta{color:rgba(255,255,255,0.75);}
@@ -1860,6 +1860,7 @@
     <div id="collabAdminZone" hidden>
       <div class="collab-tabs">
         <button type="button" class="collab-tab active" id="spaceTabVisitors">Messages visiteurs <span class="chat-badge" id="visitorTabBadge" hidden>0</span></button>
+        <button type="button" class="collab-tab" id="spaceTabNewsletter">Abonnés newsletter</button>
         <button type="button" class="collab-tab" id="spaceTabAdmin">Administration</button>
         <a href="forum.html" target="_blank" rel="noopener" class="btn btn-ghost" id="openForumBtn" style="margin-left:auto; align-self:center;">Ouvrir le forum ↗ <span style="font-weight:400; font-size:.78rem;">(nouvel onglet)</span></a>
       </div>
@@ -1880,6 +1881,15 @@
             <button type="submit" class="btn btn-primary">Répondre</button>
           </form>
           <span class="modal-error" id="errVisitorReply">Merci d'écrire un message.</span>
+        </div>
+      </div>
+
+      <div class="forum-layout" id="spacePanelNewsletter" hidden>
+        <div class="forum-panel" style="width:100%;">
+          <p class="section-lede" style="margin:0 0 10px;">Liste des visiteurs inscrits à la newsletter via le site, triée du plus récent au plus ancien.</p>
+          <div class="thread-list" id="newsletterList">
+            <p class="forum-empty" id="newsletterListEmpty">Aucun abonné pour le moment.</p>
+          </div>
         </div>
       </div>
 
@@ -2627,7 +2637,8 @@
     query as rtdbQuery, orderByChild, serverTimestamp as rtdbServerTimestamp
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
   import {
-    getFirestore, doc, setDoc, deleteDoc
+    getFirestore, doc, setDoc, deleteDoc,
+    collection, query as fsQuery, orderBy, onSnapshot
   } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -2697,9 +2708,14 @@
 
   // ---- Onglets Espace administration ----
   const spaceTabVisitors = document.getElementById('spaceTabVisitors');
+  const spaceTabNewsletter = document.getElementById('spaceTabNewsletter');
   const spaceTabAdmin = document.getElementById('spaceTabAdmin');
   const spacePanelVisitors = document.getElementById('spacePanelVisitors');
+  const spacePanelNewsletter = document.getElementById('spacePanelNewsletter');
   const spacePanelAdmin = document.getElementById('spacePanelAdmin');
+  const newsletterList = document.getElementById('newsletterList');
+  const newsletterListEmpty = document.getElementById('newsletterListEmpty');
+  let unsubNewsletterList = null;
   const visitorTabBadge = document.getElementById('visitorTabBadge');
   const adminUserList = document.getElementById('adminUserList');
   const adminUserListEmpty = document.getElementById('adminUserListEmpty');
@@ -2902,11 +2918,14 @@
         if (collabAdminZone) collabAdminZone.hidden = false;
         if (adminCollabSpace) adminCollabSpace.hidden = false;
         spaceTabVisitors.classList.add('active');
+        spaceTabNewsletter.classList.remove('active');
         spaceTabAdmin.classList.remove('active');
         spacePanelVisitors.hidden = false;
+        spacePanelNewsletter.hidden = true;
         spacePanelAdmin.hidden = true;
         demarrerEcouteVisiteurs();
         demarrerEcouteAdmin();
+        demarrerEcouteNewsletter();
         demarrerEcouteCollabChats();
         demarrerEcouteBroadcastsAdmin();
         if (unsubMemberChat) { unsubMemberChat(); unsubMemberChat = null; }
@@ -2935,6 +2954,7 @@
       if (unsubVisitorList) { unsubVisitorList(); unsubVisitorList = null; }
       if (unsubVisitorMessages) { unsubVisitorMessages(); unsubVisitorMessages = null; }
       if (unsubAdminUsers) { unsubAdminUsers(); unsubAdminUsers = null; }
+      if (unsubNewsletterList) { unsubNewsletterList(); unsubNewsletterList = null; }
       if (unsubAdminAdmins) { unsubAdminAdmins(); unsubAdminAdmins = null; }
       if (unsubCollabUsers) { unsubCollabUsers(); unsubCollabUsers = null; }
       if (unsubCollabChatsList) { unsubCollabChatsList(); unsubCollabChatsList = null; }
@@ -2948,21 +2968,19 @@
   });
 
   // ---- Onglets Espace administration ----
-  if (spaceTabVisitors && spaceTabAdmin) {
-    spaceTabVisitors.addEventListener('click', () => {
-      if (!window.isAdminStaff) return; // sécurité côté client, en plus des règles Realtime Database
-      spaceTabVisitors.classList.add('active');
-      spaceTabAdmin.classList.remove('active');
-      spacePanelVisitors.hidden = false;
-      spacePanelAdmin.hidden = true;
-    });
-    spaceTabAdmin.addEventListener('click', () => {
-      if (!window.isAdminStaff) return; // sécurité côté client, en plus des règles Realtime Database
-      spaceTabAdmin.classList.add('active');
-      spaceTabVisitors.classList.remove('active');
-      spacePanelAdmin.hidden = false;
-      spacePanelVisitors.hidden = true;
-    });
+  function activerOngletEspaceAdmin(nom) {
+    if (!window.isAdminStaff) return; // sécurité côté client, en plus des règles Realtime Database/Firestore
+    spaceTabVisitors.classList.toggle('active', nom === 'visitors');
+    spaceTabNewsletter.classList.toggle('active', nom === 'newsletter');
+    spaceTabAdmin.classList.toggle('active', nom === 'admin');
+    spacePanelVisitors.hidden = nom !== 'visitors';
+    spacePanelNewsletter.hidden = nom !== 'newsletter';
+    spacePanelAdmin.hidden = nom !== 'admin';
+  }
+  if (spaceTabVisitors && spaceTabNewsletter && spaceTabAdmin) {
+    spaceTabVisitors.addEventListener('click', () => activerOngletEspaceAdmin('visitors'));
+    spaceTabNewsletter.addEventListener('click', () => activerOngletEspaceAdmin('newsletter'));
+    spaceTabAdmin.addEventListener('click', () => activerOngletEspaceAdmin('admin'));
   }
 
   // ---- Onglets Espace Administrateur (communication collaborateurs) ----
@@ -3116,6 +3134,73 @@
       });
       visitorReplyText.value = '';
       errVisitorReply.classList.remove('show');
+    });
+  }
+
+  // ==================== NEWSLETTER (liste des abonnés inscrits via le site) ====================
+  function formatDateAbonnement(dateInscription) {
+    if (!dateInscription || typeof dateInscription.toDate !== 'function') return '';
+    return dateInscription.toDate().toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function renderNewsletterList(abonnes) {
+    if (!newsletterList) return;
+    newsletterList.innerHTML = '';
+
+    if (abonnes.length === 0) {
+      newsletterList.appendChild(newsletterListEmpty);
+      newsletterListEmpty.style.display = 'block';
+      return;
+    }
+    newsletterListEmpty.style.display = 'none';
+
+    abonnes.forEach((a) => {
+      const row = document.createElement('div');
+      row.className = 'admin-row';
+
+      const infos = document.createElement('div');
+      infos.className = 'a-infos';
+      infos.appendChild(avatarHTML(a.email || 'Abonné', a.email || ''));
+
+      const texte = document.createElement('span');
+      const nameLine = document.createElement('span');
+      nameLine.className = 'a-name';
+      nameLine.textContent = a.email || '(sans email)';
+      if (a.actif === false) {
+        const badge = document.createElement('span');
+        badge.className = 'admin-badge';
+        badge.style.background = '#8a8378';
+        badge.textContent = 'DÉSINSCRIT';
+        nameLine.appendChild(badge);
+      }
+      const dateLine = document.createElement('span');
+      dateLine.className = 'a-email';
+      dateLine.textContent = formatDateAbonnement(a.dateInscription) || 'Date inconnue';
+      texte.appendChild(nameLine);
+      texte.appendChild(document.createElement('br'));
+      texte.appendChild(dateLine);
+      infos.appendChild(texte);
+      row.appendChild(infos);
+
+      newsletterList.appendChild(row);
+    });
+  }
+
+  function demarrerEcouteNewsletter() {
+    if (!window.isAdminStaff || unsubNewsletterList) return;
+    const newsletterQuery = fsQuery(collection(db, 'newsletterSubscribers'), orderBy('dateInscription', 'desc'));
+    unsubNewsletterList = onSnapshot(newsletterQuery, (snap) => {
+      const abonnes = [];
+      snap.forEach((docSnap) => abonnes.push(docSnap.data()));
+      renderNewsletterList(abonnes);
+    }, (err) => {
+      // Le plus souvent : règles Firestore ne donnant pas encore le droit de lecture aux admins
+      if (newsletterList) {
+        newsletterList.innerHTML = '';
+        newsletterListEmpty.textContent = "Impossible de charger les abonnés (vérifier les règles Firestore de lecture pour les admins).";
+        newsletterList.appendChild(newsletterListEmpty);
+        newsletterListEmpty.style.display = 'block';
+      }
     });
   }
 
@@ -3511,6 +3596,10 @@
 
   // Construit la base de connaissance à partir du contenu réel du site (FAQ + services + contact),
   // afin que le bot reste à jour automatiquement si le contenu du site change.
+  // Chaque entrée garde titre / détail / CTA séparés pour pouvoir composer une réponse structurée.
+  const CTA_DEVIS = "Prochaine étape : écrivez-moi ici avec votre besoin, ou sur WhatsApp au +224 621 10 98 47, pour un devis sous 24 à 48h.";
+  const CTA_CONTACT = "Vous pouvez continuer la conversation ici, ou m'écrire directement sur WhatsApp au +224 621 10 98 47.";
+
   function construireBaseConnaissance() {
     const base = [];
 
@@ -3519,29 +3608,61 @@
       const a = item.querySelector('.faq-a p');
       if (!q || !a) return;
       const question = q.childNodes[0] ? q.childNodes[0].textContent.trim() : q.textContent.trim();
-      const reponse = a.textContent.trim();
-      base.push({ motsCles: motsCles(question + ' ' + reponse), reponse });
+      const detail = a.textContent.trim();
+      base.push({
+        motsCles: motsCles(question + ' ' + detail),
+        titre: question,
+        detail: detail,
+        cta: CTA_CONTACT
+      });
     });
 
     document.querySelectorAll('.service-card').forEach(card => {
-      const titre = card.querySelector('h3');
-      const desc = card.querySelector('p');
-      if (!titre) return;
-      const reponse = titre.textContent.trim() + (desc ? ' — ' + desc.textContent.trim() : '') + ' Écrivez-moi via ce chat ou WhatsApp (+224 621 10 98 47) pour un devis.';
-      base.push({ motsCles: motsCles(titre.textContent + ' ' + (desc ? desc.textContent : '')), reponse });
+      const titreEl = card.querySelector('h3');
+      const descEl = card.querySelector('p');
+      if (!titreEl) return;
+      base.push({
+        motsCles: motsCles(titreEl.textContent + ' ' + (descEl ? descEl.textContent : '')),
+        titre: titreEl.textContent.trim(),
+        detail: descEl ? descEl.textContent.trim() : '',
+        cta: CTA_DEVIS
+      });
     });
 
     // Quelques entrées de secours utiles même si absentes du HTML détecté ci-dessus
-    base.push({ motsCles: motsCles('whatsapp telephone numero contacter joindre'), reponse: "Vous pouvez me joindre directement sur WhatsApp au +224 621 10 98 47, ou via le formulaire de contact du site." });
-    base.push({ motsCles: motsCles('prix tarif cout combien coute devis'), reponse: "Les tarifs dépendent du besoin (formation, coaching, création graphique...). Décrivez votre projet ici ou par WhatsApp et je vous envoie un devis sous 24 à 48h." });
-    base.push({ motsCles: motsCles('horaire disponibilite ouvert quand'), reponse: "Je réponds généralement sous 24 à 48h aux demandes reçues via le chat, le formulaire ou WhatsApp." });
+    base.push({
+      motsCles: motsCles('whatsapp telephone numero contacter joindre'),
+      titre: 'Comment me contacter',
+      detail: "Le moyen le plus rapide est WhatsApp, au +224 621 10 98 47. Vous pouvez aussi utiliser le formulaire de contact du site ou continuer directement sur ce chat.",
+      cta: CTA_CONTACT
+    });
+    base.push({
+      motsCles: motsCles('prix tarif cout combien coute devis'),
+      titre: 'Tarifs et devis',
+      detail: "Les tarifs dépendent du besoin précis : formation, coaching, création graphique, mise en forme de CV, etc. Il n'y a donc pas de prix fixe affiché — chaque demande donne lieu à un devis personnalisé.",
+      cta: "Décrivez votre projet ici (type de prestation, délai souhaité) ou envoyez-le sur WhatsApp au +224 621 10 98 47, et je vous réponds avec un devis sous 24 à 48h."
+    });
+    base.push({
+      motsCles: motsCles('horaire disponibilite ouvert quand delai'),
+      titre: 'Délai de réponse',
+      detail: "Les demandes reçues via le chat, le formulaire de contact ou WhatsApp sont traitées personnellement, sous 24 à 48h en général.",
+      cta: CTA_CONTACT
+    });
 
     return base;
   }
 
   let baseConnaissance = null;
-  const REPONSE_SALUTATION = "Bonjour et bienvenue ! Je suis l'assistant automatique du site. Posez votre question (formations, coaching, livre, CV, tarifs...) et je vous réponds tout de suite avec les informations du site. Un membre de l'équipe pourra aussi prendre le relais.";
-  const REPONSE_INCONNUE = "Je n'ai pas d'information précise à ce sujet dans le contenu du site pour le moment. Un membre de l'équipe va vous répondre personnellement dès que possible. Vous pouvez aussi consulter la section FAQ ou écrire sur WhatsApp au +224 621 10 98 47.";
+  const REPONSE_SALUTATION = "Bonjour et bienvenue !\n\nJe suis l'assistant automatique du site. Posez-moi une question précise (formations, coaching, livre, CV, tarifs, délais...) et je vous réponds tout de suite avec les informations du site.\n\nUn membre de l'équipe peut aussi prendre le relais à tout moment.";
+  const REPONSE_INCONNUE = "Je n'ai pas d'information précise à ce sujet dans le contenu du site pour l'instant.\n\nPouvez-vous reformuler en 2-3 mots-clés (ex. \"formation\", \"tarif CV\", \"livre\") ? Sinon, un membre de l'équipe va vous répondre personnellement.\n\n" + CTA_CONTACT;
+  const SEUIL_SCORE_MIN = 1; // score minimum de mots-clés en commun pour considérer une réponse pertinente
+
+  // Compose une réponse structurée en 3 blocs : titre, détail, prochaine étape — plus lisible qu'un paragraphe unique.
+  function formaterReponse(entree) {
+    const blocs = [entree.titre || null, entree.detail, entree.cta]
+      .filter(b => b && b.trim().length > 0);
+    return blocs.join('\n\n');
+  }
 
   function trouverReponseAuto(messageVisiteur) {
     if (!baseConnaissance) baseConnaissance = construireBaseConnaissance();
@@ -3553,15 +3674,26 @@
       return REPONSE_SALUTATION;
     }
 
+    // Score pondéré : les mots-clés rares (spécifiques) comptent plus que les mots-clés très répétés dans la base,
+    // pour éviter qu'un mot trop générique fasse remonter une réponse hors-sujet.
+    const frequenceMot = {};
+    baseConnaissance.forEach(entree => {
+      new Set(entree.motsCles).forEach(mot => { frequenceMot[mot] = (frequenceMot[mot] || 0) + 1; });
+    });
+
     let meilleur = null;
     let meilleurScore = 0;
     baseConnaissance.forEach(entree => {
       let score = 0;
-      motsMsg.forEach(mot => { if (entree.motsCles.includes(mot)) score++; });
+      motsMsg.forEach(mot => {
+        if (entree.motsCles.includes(mot)) {
+          score += 1 / Math.sqrt(frequenceMot[mot] || 1);
+        }
+      });
       if (score > meilleurScore) { meilleurScore = score; meilleur = entree; }
     });
 
-    return meilleurScore > 0 ? meilleur.reponse : REPONSE_INCONNUE;
+    return (meilleur && meilleurScore >= SEUIL_SCORE_MIN) ? formaterReponse(meilleur) : REPONSE_INCONNUE;
   }
 
   // ==================== CHAT EN DIRECT (bulle flottante, côté visiteur) — Realtime Database ====================
