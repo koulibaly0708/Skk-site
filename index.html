@@ -1490,6 +1490,20 @@
         </button>
         <div class="faq-a"><p>Oui, un outil de création de CV est disponible directement sur le site, et vous pouvez également me confier la mise en forme complète de votre CV sur demande.</p></div>
       </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          À quoi sert l'Espace Collaborateur ?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p>C'est un espace personnel réservé aux membres inscrits, accessible sur une page dédiée après connexion. Il vous permet de rester en direct avec moi, de recevoir mes annonces en temps réel, d'échanger par message et de suivre les informations qui concernent vos projets ou missions.</p></div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          À quoi sert l'Espace Administrateur ?
+          <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-a"><p>Réservé aux comptes ayant le rôle Admin, cet espace permet de répondre en direct aux messages des visiteurs du site, de communiquer avec les collaborateurs inscrits, de diffuser des annonces à l'ensemble des membres et de gérer les droits d'administration.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -2769,7 +2783,24 @@
             createdAt: rtdbServerTimestamp()
           }).catch(() => {});
         } else {
-          await signInWithEmailAndPassword(auth, emailVal, passVal);
+          const cred = await signInWithEmailAndPassword(auth, emailVal, passVal);
+
+          // Connexion via « Espace Administrateur » : on vérifie que le compte est bien configuré comme admin
+          if (window.collabModalContext === 'admin') {
+            let estAdminConfirme = false;
+            try {
+              const adminSnap = await get(ref(rtdb, 'admins/' + cred.user.uid));
+              estAdminConfirme = adminSnap.exists() && adminSnap.val() === true;
+            } catch (errRole) {
+              estAdminConfirme = false;
+            }
+            if (!estAdminConfirme) {
+              await signOut(auth);
+              collabSendError.textContent = "Accès refusé : ce compte n'est pas configuré comme administrateur.";
+              collabSendError.classList.add('show');
+              return;
+            }
+          }
         }
         window.location.href = 'espace.html';
       } catch (err) {
